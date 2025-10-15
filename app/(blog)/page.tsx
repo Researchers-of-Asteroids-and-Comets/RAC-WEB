@@ -19,24 +19,35 @@ function Intro(props: { title: string | null | undefined; description: any }) {
     ? props.description
     : demo.description;
   return (
-    <section className="mt-16 mb-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
-      <h1 className="text-balance text-6xl font-sans font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
-        {(title || demo.title).split("").map((ch, idx) => (
-          <span
-            key={idx}
-            className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
-          >
-            {ch}
-          </span>
-        ))}
-      </h1>
-      <h2 className="text-pretty mt-5 text-center text-lg lg:pl-8 lg:text-left">
-        <PortableText
-          className="prose-lg"
-          value={description?.length ? description : demo.description}
-        />
-      </h2>
-    </section>
+    <header className="relative flex h-screen flex-col items-center justify-center">
+      <video
+        autoPlay
+        loop
+        muted
+        className="absolute inset-0 -z-10 h-full w-full object-cover"
+      >
+        <source src="/background-video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div className="z-10 text-center text-white">
+        <h1 className="text-balance text-6xl font-sans font-bold leading-tight tracking-tighter lg:pr-8 lg:text-8xl">
+          {(title || demo.title).split("").map((ch, idx) => (
+            <span
+              key={idx}
+              className={["text-[#F1C21E]", "text-[#045396]", "text-[#E83B13]", "text-[#09935F]"][idx % 4]}
+            >
+              {ch}
+            </span>
+          ))}
+        </h1>
+        <h2 className="text-pretty mt-5 text-center text-lg lg:pl-8 lg:text-left">
+          <PortableText
+            className="prose-lg"
+            value={description?.length ? description : demo.description}
+          />
+        </h2>
+      </div>
+    </header>
   );
 }
 
