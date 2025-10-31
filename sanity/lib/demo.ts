@@ -3,6 +3,7 @@
  */
 
 export const title = "Research on Asteroids and Comets";
+export const abbreviation = "RAC";
 
 export const description = [
   {

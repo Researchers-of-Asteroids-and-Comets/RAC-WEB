@@ -7,6 +7,7 @@ import CoverImage from "./shared/ui/cover-image";
 import DateComponent from "./shared/ui/date";
 import MoreStories from "./home/components/more-stories";
 import Onboarding from "./home/components/onboarding";
+import Hero from "./home/components/hero";
 import PortableText from "./shared/ui/portable-text";
 import BadgeCategories from "./categories/components/BadgeCategories";
 import CategoryLink from "./categories/components/CategoryLink";
@@ -132,7 +133,7 @@ export default async function Page() {
 
   return (
     <>
-      <Intro title={settings?.title} description={settings?.description} />
+      <Hero />
       <div className="container mx-auto px-5">
         {heroPost ? (
           <HeroPost
