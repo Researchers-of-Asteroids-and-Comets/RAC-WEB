@@ -44,7 +44,7 @@ export default function PostsGrid({ posts, searchTerm, selectedCategory, validCa
         {posts.map((post) => (
           <article
             key={post._id}
-            className="overflow-hidden bg-white shadow-lg md:bg-transparent md:shadow-none"
+            className="overflow-hidden bg-card shadow-lg md:bg-transparent md:shadow-none"
           >
             <Link href={`/posts/${post.slug}`} className="group block">
               <CoverImage image={post.coverImage} priority={false} />
@@ -87,16 +87,16 @@ export default function PostsGrid({ posts, searchTerm, selectedCategory, validCa
 
   return (
     <div className="text-center py-16">
-      <h3 className="text-xl font-medium text-gray-900 mb-2">
+      <h3 className="text-xl font-medium text-foreground mb-2">
         No se encontraron publicaciones
       </h3>
-      <p className="text-gray-500 mb-6">
+      <p className="text-muted-foreground mb-6">
         Intenta ajustar tu búsqueda o seleccionar una categoría diferente
       </p>
       {(searchTerm || selectedCategory) && (
         <button
           onClick={clearFilters}
-          className="px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+          className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/80 transition-colors"
         >
           Limpiar filtros
         </button>

@@ -39,8 +39,8 @@ export default function CategoryButtons({ categories, selectedCategory, searchTe
         onClick={() => handleCategoryChange("")}
         className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
           selectedCategory === ""
-            ? "bg-gray-900 text-white"
-            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            ? "bg-primary text-primary-foreground"
+            : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
         }`}
       >
         Todas las categorías
@@ -51,8 +51,8 @@ export default function CategoryButtons({ categories, selectedCategory, searchTe
           onClick={() => handleCategoryChange(category.slug!)}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
             selectedCategory === category.slug
-              ? "bg-gray-900 text-white"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              ? "bg-primary text-primary-foreground"
+              : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
           }`}
         >
           {category.name} ({category.postCount})

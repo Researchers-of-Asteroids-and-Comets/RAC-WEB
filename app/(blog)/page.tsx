@@ -38,7 +38,7 @@ function Intro(props: { title: string | null | undefined; description: any }) {
             <div className="absolute inset-0 bg-black/40"></div> {/* Overlay for video */}
           </div>
         </div>
-        <div className="flex w-full md:w-1/2 items-center justify-center bg-white p-5 text-center text-black h-1/2 md:h-full">
+        <div className="flex w-full md:w-1/2 items-center justify-center bg-background p-5 text-center text-foreground h-1/2 md:h-full">
           <div>
             <h1 className="text-balance text-4xl md:text-6xl font-sans font-bold leading-tight tracking-tighter lg:text-8xl">
               {(title || demo.title).split("").map((ch, idx) => (

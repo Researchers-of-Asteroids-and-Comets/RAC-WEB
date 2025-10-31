@@ -124,7 +124,7 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
               placeholder="Buscar por título o contenido..."
               value={localSearchTerm}
               onChange={(e) => handleSearchChange(e.target.value)}
-              className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:border-gray-400 shadow-sm bg-white relative z-10 transition-all duration-300"
+              className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:border-gray-400 shadow-sm bg-background relative z-10 transition-all duration-300"
             />
           </div>
         </div>
@@ -135,8 +135,8 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
             onClick={() => handleCategoryChange("")}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
               selectedCategory === ""
-                ? "bg-gray-900 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                ? "bg-primary text-primary-foreground"
+                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
             }`}
           >
             Todas las categorías
@@ -147,8 +147,8 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
               onClick={() => handleCategoryChange(category.slug!)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 selectedCategory === category.slug
-                  ? "bg-gray-900 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
               }`}
             >
               {category.name} ({category.postCount})
@@ -159,7 +159,7 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
 
       {/* Results Summary */}
       <div className="mb-8">
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           {filteredPosts.length === 0 
             ? "No se encontraron publicaciones"
             : `${filteredPosts.length} ${filteredPosts.length === 1 ? 'publicación encontrada' : 'publicaciones encontradas'}`
@@ -177,7 +177,7 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
           {filteredPosts.map((post) => (
             <article
               key={post._id}
-              className="overflow-hidden bg-white shadow-lg md:bg-transparent md:shadow-none"
+              className="overflow-hidden bg-card shadow-lg md:bg-transparent md:shadow-none"
             >
               <Link href={`/posts/${post.slug}`} className="group block">
                 <CoverImage image={post.coverImage} priority={false} />
@@ -217,16 +217,16 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
         </div>
       ) : (
         <div className="text-center py-16">
-          <h3 className="text-xl font-medium text-gray-900 mb-2">
+          <h3 className="text-xl font-medium text-foreground mb-2">
             No se encontraron publicaciones
           </h3>
-          <p className="text-gray-500 mb-6">
+          <p className="text-muted-foreground mb-6">
             Intenta ajustar tu búsqueda o seleccionar una categoría diferente
           </p>
           {(urlSearchTerm || selectedCategory) && (
             <button
               onClick={() => updateURL("", "")}
-              className="px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
+              className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/80 transition-colors"
             >
               Limpiar filtros
             </button>

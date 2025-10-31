@@ -68,13 +68,13 @@ export default function CategoryFilter({ categories, currentCategory }: Category
               <h3 className="text-xl font-bold transition-colors">
                 {category.name!}
               </h3>
-              <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+              <span className="text-sm text-muted-foreground bg-muted px-2 py-1 rounded-full">
                 {category.postCount} {category.postCount === 1 ? 'post' : 'posts'}
               </span>
             </div>
             
             {category.description && (
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 {category.description}
               </p>
             )}
@@ -91,7 +91,7 @@ export default function CategoryFilter({ categories, currentCategory }: Category
 
       {filteredCategories.length === 0 && searchTerm && (
         <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">
+          <p className="text-muted-foreground text-lg">
             No se encontraron categorías que coincidan con &quot;{searchTerm}&quot;
           </p>
         </div>

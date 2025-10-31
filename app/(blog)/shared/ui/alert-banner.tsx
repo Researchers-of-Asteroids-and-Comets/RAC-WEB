@@ -40,7 +40,7 @@ export default function AlertBanner() {
       ref={ref}
       className={`${
         pending ? "animate-pulse" : ""
-      } fixed top-0 left-0 z-50 w-full border-b bg-white/95 text-black backdrop-blur`}
+      } fixed top-0 left-0 z-50 w-full border-b bg-background/95 text-foreground backdrop-blur`}
     >
       <div className="py-2 text-center text-sm">
         {pending ? (

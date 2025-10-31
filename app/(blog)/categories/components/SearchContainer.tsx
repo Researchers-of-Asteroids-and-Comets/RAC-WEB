@@ -61,7 +61,7 @@ export default function SearchContainer({ categories, posts, searchParams }: Sea
       {/* Search and Filter Controls */}
       <div className="mb-12 space-y-6">
         {/* Search Input - Client Component */}
-        <Suspense fallback={<div className="h-12 bg-gray-100 rounded-lg animate-pulse"></div>}>
+        <Suspense fallback={<div className="h-12 bg-muted rounded-lg animate-pulse"></div>}>
           <SearchInput 
             initialValue={searchTerm} 
             selectedCategory={selectedCategory}
@@ -69,7 +69,7 @@ export default function SearchContainer({ categories, posts, searchParams }: Sea
         </Suspense>
 
         {/* Category Filter - Client Component */}
-        <Suspense fallback={<div className="h-10 bg-gray-100 rounded-lg animate-pulse"></div>}>
+        <Suspense fallback={<div className="h-10 bg-muted rounded-lg animate-pulse"></div>}>
           <CategoryButtons 
             categories={validCategories}
             selectedCategory={selectedCategory}

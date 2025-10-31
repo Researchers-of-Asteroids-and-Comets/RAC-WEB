@@ -2,8 +2,6 @@
 
 /* Variables mínimas para el menú (sin animaciones) */
 :root {
-  --background: #f8f8f8;
-  --foreground: #0a0a0a;
   --cream: #f1efe6;
   --black: #0a0a0a;
   --rollover: #c2bfaf;
