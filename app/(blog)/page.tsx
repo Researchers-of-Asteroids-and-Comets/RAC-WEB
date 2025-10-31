@@ -80,7 +80,7 @@ function HeroPost({
   categories: Array<{ name: string; slug: string }> | null;
 }) {
   return (
-    <article className="overflow-hidden bg-white shadow-lg md:grid md:bg-transparent md:shadow-none mb-20 md:mb-28">
+    <article className="overflow-hidden shadow-lg md:grid md:bg-transparent md:shadow-none mb-20 md:mb-28">
       <Link
         className="group mb-8 block md:mb-16 md:row-start-1"
         href={`/posts/${slug}`}

@@ -2,7 +2,7 @@
  * Demo data used as placeholders and initial values for the blog
  */
 
-export const title = "WOW!";
+export const title = "Research on Asteroids and Comets";
 
 export const description = [
   {
