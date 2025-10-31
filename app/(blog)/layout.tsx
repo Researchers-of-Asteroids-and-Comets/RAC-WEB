@@ -7,8 +7,7 @@ import {
   toPlainText,
   type PortableTextBlock,
 } from "next-sanity";
-import localFont from "next/font/local";
-import { Lora } from "next/font/google";
+import { GeistMono } from "geist/font/mono";
 import { draftMode } from "next/headers";
 
 import AlertBanner from "./shared/ui/alert-banner";
@@ -57,30 +56,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const instrumentSerif = Lora({
-  variable: "--font-instrument-serif",
-  display: "swap",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
-});
-
-const instrumentSans = localFont({
-  variable: "--font-instrument-sans",
-  display: "swap",
-  src: [
-    {
-      path: "../(typograhy)/Instrument-Sans/InstrumentSans-VariableFont_wdth,wght.ttf",
-      weight: "100 900",
-      style: "normal",
-    },
-    {
-      path: "../(typograhy)/Instrument-Sans/InstrumentSans-Italic-VariableFont_wdth,wght.ttf",
-      weight: "100 900",
-      style: "italic",
-    },
-  ],
-});
+// GeistMono is already configured with the variable --font-geist-mono
 
 
 export default async function RootLayout({
@@ -93,7 +69,7 @@ export default async function RootLayout({
   const { isEnabled: isDraftMode } = await draftMode();
 
   return (
-    <html lang="en" className={`${instrumentSerif.variable} ${instrumentSans.variable} bg-background text-foreground`}>
+    <html lang="en" className={`${GeistMono.variable} bg-background text-foreground`}>
       <body>
         <MenuProvider>
           <section className="min-h-screen">
