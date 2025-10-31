@@ -17,7 +17,9 @@ import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api";
 import { pageStructure, singletonPlugin } from "@/sanity/plugins/settings";
 import { assistWithPresets } from "@/sanity/plugins/assist";
 import author from "@/sanity/schemas/documents/author";
+import category from "@/sanity/schemas/documents/category";
 import post from "@/sanity/schemas/documents/post";
+import page from "@/sanity/schemas/documents/page";
 import settings from "@/sanity/schemas/singletons/settings";
 import { resolveHref } from "@/sanity/lib/utils";
 
@@ -35,8 +37,10 @@ export default defineConfig({
       // Singletons
       settings,
       // Documents
+      category,
       post,
       author,
+      page,
     ],
   },
   plugins: [
@@ -50,7 +54,7 @@ export default defineConfig({
         ]),
         locations: {
           settings: defineLocations({
-            locations: [{ ...homeLocation, key: "settings-home" }],
+            locations: [{ ...homeLocation }],
             message: "This document is used on all pages",
             tone: "caution",
           }),
@@ -64,12 +68,10 @@ export default defineConfig({
                 {
                   title: doc?.title || "Untitled",
                   href: resolveHref("post", doc?.slug)!,
-                  key: `post-${doc?.slug || 'untitled'}`,
                 },
                 {
                   ...homeLocation,
                   title: "Home",
-                  key: "post-home",
                 },
               ],
             }),

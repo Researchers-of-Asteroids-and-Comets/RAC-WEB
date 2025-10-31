@@ -1,5 +1,6 @@
 import { DocumentTextIcon } from "@sanity/icons";
 import { format, parseISO } from "date-fns";
+import { es } from "date-fns/locale";
 import { defineField, defineType } from "sanity";
 
 import authorType from "./author";
@@ -32,13 +33,37 @@ export default defineType({
       name: "slug",
       title: "Slug",
       type: "slug",
-      description: "A slug is required for the post to show up in the preview",
+      description:
+        "El slug se usa en la URL. Sin espacios, minúsculas y guiones (-).",
       options: {
         source: "title",
         maxLength: 96,
         isUnique: (value, context) => context.defaultIsUnique(value, context),
+        slugify: (input: string) =>
+          input
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, "-")
+            .replace(/[^a-z0-9-]/g, "")
+            .replace(/--+/g, "-")
+            .slice(0, 96),
       },
-      validation: (rule) => rule.required(),
+      validation: (rule) =>
+        rule
+          .required()
+          .custom((value) => {
+            const v = value?.current as string | undefined;
+            if (!v || v.length === 0) return "El slug es obligatorio";
+            if (v.length > 96)
+              return "El slug debe tener máximo 96 caracteres";
+            if (/\s/.test(v))
+              return "El slug no puede tener espacios. Usa guiones (-)";
+            if (!/^[a-z0-9-]+$/.test(v))
+              return "Solo letras minúsculas, números y guiones";
+            if (/--/.test(v)) return "Evita guiones dobles";
+            if (/^-|-$/.test(v)) return "No empieces ni termines con guión";
+            return true;
+          }),
     }),
     defineField({
       name: "content",
@@ -83,6 +108,68 @@ export default defineType({
             ],
           },
         },
+        {
+          type: "image",
+          name: "contentImage",
+          title: "Image",
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: "alt",
+              type: "string",
+              title: "Alternative text",
+              description: "Important for SEO and accessibility.",
+              validation: (rule: any) => rule.required(),
+            },
+            {
+              name: "caption",
+              type: "string",
+              title: "Caption",
+              description: "Optional caption for the image.",
+            },
+          ],
+        },
+        {
+          type: "object",
+          name: "imageGallery",
+          title: "Galería de imágenes",
+          fields: [
+            {
+              name: "images",
+              title: "Imágenes",
+              type: "array",
+              of: [
+                {
+                  type: "image",
+                  options: { hotspot: true },
+                  fields: [
+                    {
+                      name: "alt",
+                      type: "string",
+                      title: "Alternative text",
+                      description: "Important for SEO and accessibility.",
+                      validation: (rule: any) => rule.required(),
+                    },
+                    {
+                      name: "caption",
+                      type: "string",
+                      title: "Caption",
+                      description: "Optional caption for the image.",
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "caption",
+              type: "string",
+              title: "Caption",
+              description: "Optional caption for the gallery.",
+            },
+          ],
+        },
       ],
     }),
     defineField({
@@ -125,26 +212,48 @@ export default defineType({
       initialValue: () => new Date().toISOString(),
     }),
     defineField({
-      name: "author",
-      title: "Author",
-      type: "reference",
-      to: [{ type: authorType.name }],
+      name: "categories",
+      title: "Categorías",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "category" }] }],
+      description: "Selecciona una o más categorías para este post.",
+    }),
+    defineField({
+      name: "authors",
+      title: "Autores",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: authorType.name }] }],
+      description: "Selecciona uno o varios autores para este post.",
+      validation: (rule) => rule.min(1).error("Debe haber al menos un autor"),
     }),
   ],
   preview: {
     select: {
       title: "title",
-      author: "author.name",
+      authors: "authors",
       date: "date",
       media: "coverImage",
     },
-    prepare({ title, media, author, date }) {
+    prepare({ title, media, authors, date }) {
+      const formatDate = (dateString: string) => {
+        const formatted = format(parseISO(dateString), "LLL d, yyyy", { locale: es });
+        return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+      };
+
+      const authorLabel = Array.isArray(authors) && authors.length
+        ? `${authors.length} autor${authors.length > 1 ? "es" : ""}`
+        : undefined;
+
       const subtitles = [
-        author && `by ${author}`,
-        date && `on ${format(parseISO(date), "LLL d, yyyy")}`,
+        authorLabel && `por ${authorLabel}`,
+        date && `el ${formatDate(date)}`,
       ].filter(Boolean);
 
-      return { title, media, subtitle: subtitles.join(" ") };
+      return {
+        title,
+        subtitle: subtitles.join(" · ") || undefined,
+        media,
+      };
     },
   },
 });
