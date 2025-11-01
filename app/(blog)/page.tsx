@@ -151,7 +151,7 @@ export default async function Page() {
         {heroPost?._id && (
           <aside>
             <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
-              Más Publicaciones
+              More Publications
             </h2>
             <Suspense>
               <MoreStories skip={heroPost._id} limit={100} />
