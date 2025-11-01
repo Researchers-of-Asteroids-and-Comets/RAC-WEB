@@ -20,6 +20,7 @@ import author from "@/sanity/schemas/documents/author";
 import category from "@/sanity/schemas/documents/category";
 import post from "@/sanity/schemas/documents/post";
 import page from "@/sanity/schemas/documents/page";
+import role from "@/sanity/schemas/documents/role";
 import settings from "@/sanity/schemas/singletons/settings";
 import { resolveHref } from "@/sanity/lib/utils";
 
@@ -41,6 +42,7 @@ export default defineConfig({
       post,
       author,
       page,
+      role,
     ],
   },
   plugins: [

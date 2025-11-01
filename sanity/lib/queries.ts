@@ -49,7 +49,7 @@ export const authorBySlugQuery = defineQuery(`
     "slug": slug.current,
     picture,
     bio,
-    expertise
+    "roles": roles[]->{title}
   }
 `);
 
@@ -68,7 +68,17 @@ export const allAuthorsQuery = defineQuery(`
     "slug": slug.current,
     picture,
     bio,
-    expertise
+    "roles": roles[]->{title}
+  }
+`);
+
+export const authorsQuery = defineQuery(`
+  *[_type == "author"]{
+    name,
+    "slug": slug.current,
+    picture,
+    bio,
+    "roles": roles[]->{title, "slug": slug.current, hierarchy, color}
   }
 `);
 

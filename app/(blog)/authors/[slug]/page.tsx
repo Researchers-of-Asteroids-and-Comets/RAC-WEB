@@ -32,16 +32,16 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
           <Avatar name={author.name ?? "Anónimo"} picture={author.picture} slug={(author as any)?.slug ?? null} />
         </div>
         
-        {(author as any).expertise?.length ? (
+        {(author as any).roles?.length ? (
           <div className="mt-6">
-            <h3 className="text-lg font-medium mb-3">Áreas de Expertise</h3>
+            <h3 className="text-lg font-medium mb-3">Organizational Roles</h3>
             <div className="flex flex-wrap gap-2">
-              {(author as any).expertise.map((area: string, index: number) => (
+              {(author as any).roles.map((role: any, index: number) => (
                 <span 
                   key={index}
                   className="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-sm text-sm font-light uppercase tracking-wide"
                 >
-                  {area}
+                  {role.title}
                 </span>
               ))}
             </div>

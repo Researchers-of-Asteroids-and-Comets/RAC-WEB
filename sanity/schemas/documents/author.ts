@@ -90,16 +90,14 @@ export default defineType({
         },
       ],
     }),
-    // Areas of expertise/research fields
+    // Roles in the organization
     defineField({
-      name: "expertise",
-      title: "Áreas de Expertise",
+      name: "roles",
+      title: "Roles en la Organización",
       type: "array",
-      of: [{ type: "string" }],
-      description: "Lista de áreas de investigación, especialidades o campos de expertise del autor",
-      options: {
-        layout: "tags",
-      },
+      of: [{ type: "reference", to: [{ type: "role" }] }],
+      description: "Selecciona uno o más roles que desempeña este autor en la organización",
+      validation: (rule) => rule.min(1).error("Debe tener al menos un rol asignado"),
     }),
     defineField({
       name: "picture",

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { urlForImage } from "@/sanity/lib/utils";
-import PortableText from "../../shared/ui/portable-text";
 import type { AllAuthorsQueryResult } from "@/sanity.types";
 
 interface TeamGridProps {
@@ -18,7 +17,7 @@ export default function TeamGrid({ authors }: TeamGridProps) {
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-4">
       {authors.map((author) => {
         if (!author.name || !author.slug) return null;
         
@@ -53,31 +52,12 @@ export default function TeamGrid({ authors }: TeamGridProps) {
                   {author.name}
                 </h3>
                 
-                {/* Expertise Areas */}
-                {author.expertise?.length ? (
+                {/* Role in Organization */}
+                {author.roles?.length ? (
                   <div className="w-full">
-                    <div className="flex flex-wrap gap-1">
-                      {author.expertise.slice(0, 2).map((area, index) => (
-                        <span 
-                          key={index}
-                          className="text-xs px-1 py-0.5 bg-neutral-100 text-neutral-700 rounded-sm font-light uppercase tracking-wide"
-                        >
-                          {area}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-                
-                {/* Bio Preview */}
-                {author.bio?.length ? (
-                  <div className="w-full">
-                    <div className="text-xs text-neutral-600 font-light line-clamp-2">
-                      <PortableText 
-                        className="prose-xs prose-neutral" 
-                        value={author.bio as any} 
-                      />
-                    </div>
+                    <p className="text-sm text-muted-foreground font-light">
+                      {author.roles.slice(0, 2).map(role => role.title).join(" • ")}
+                    </p>
                   </div>
                 ) : null}
               </div>

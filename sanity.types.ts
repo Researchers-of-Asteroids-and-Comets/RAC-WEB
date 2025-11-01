@@ -100,7 +100,12 @@ export type Author = {
     _type: "block";
     _key: string;
   }>;
-  expertise?: Array<string>;
+  roles?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "role";
+  }>;
   picture?: {
     asset?: {
       _ref: string;
@@ -114,6 +119,16 @@ export type Author = {
     alt?: string;
     _type: "image";
   };
+};
+
+export type Role = {
+  _id: string;
+  _type: "role";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
 };
 
 export type Post = {
@@ -924,7 +939,9 @@ export type AuthorBySlugQueryResult = {
     _type: "block";
     _key: string;
   }> | null;
-  expertise: Array<string> | null;
+  roles: Array<{
+    title: string | null;
+  }> | null;
 } | null;
 // Variable: authorSlugsQuery
 // Query: *[_type == "author" && defined(slug.current)]{"slug": slug.current}
@@ -1011,8 +1028,10 @@ export type AllAuthorsQueryResult = Array<{
     _type: "block";
     _key: string;
   }> | null;
-  expertise: Array<string> | null;
-}>;
+  roles: Array<{
+    title: string | null;
+  }> | null;
+}>
 // Variable: postsByCategoryQuery
 // Query: *[_type == "post" && defined(slug.current) && $slug in categories[]->slug.current] | order(date desc, _updatedAt desc) {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
 export type PostsByCategoryQueryResult = Array<{
