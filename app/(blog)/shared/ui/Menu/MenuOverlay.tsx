@@ -94,35 +94,11 @@ export default function MenuOverlay() {
           <div className="flex gap-6">
             <a
               className="text-sm uppercase"
-              href="https://instagram.com/grupoastrowow"
+              href="https://www.udea.edu.co"
               target="_blank"
               rel="noreferrer"
             >
-              Instagram
-            </a>
-            <a
-              className="text-sm uppercase"
-              href="https://www.youtube.com/@grupoastrowow"
-              target="_blank"
-              rel="noreferrer"
-            >
-              YouTube
-            </a>
-            <a
-              className="text-sm uppercase"
-              href="https://www.facebook.com/share/1Fw1L8LxVU/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Facebook
-            </a>
-            <a
-              className="text-sm uppercase"
-              href="https://www.tiktok.com/@grupoastrowow"
-              target="_blank"
-              rel="noreferrer"
-            >
-              TikTok
+              University of Antioquia
             </a>
           </div>
         </div>
