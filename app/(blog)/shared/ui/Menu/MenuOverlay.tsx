@@ -63,8 +63,8 @@ export default function MenuOverlay() {
               <Link href={href} onClick={closeMenu}>
                 <h1
                   className={[
-                    "text-[clamp(2rem,8vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-foreground hover:underline",
-                    pathname === href ? "!text-muted-foreground underline" : "",
+                    "text-3xl md:text-4xl lg:text-5xl leading-[0.9] font-medium tracking-[-0.02em] text-foreground  hover:text-muted-foreground",
+                    pathname === href ? "!text-foreground underline" : "",
                   ].join(" ")}
                 >
                   {label}
@@ -83,7 +83,7 @@ export default function MenuOverlay() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleSearchKeyDown}
-                className="w-full bg-transparent border-b-2 border-muted-foreground text-[clamp(2rem,8vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-foreground placeholder-muted-foreground/70 focus:outline-none focus:border-[var(--rollover)] transition-colors duration-200 pb-2"
+                className="w-full bg-transparent border-b-2 border-muted-foreground text-3xl md:text-4xl lg:text-5xl leading-[0.9] font-medium tracking-[-0.02em] text-foreground placeholder-muted-foreground/70 focus:outline-none focus:border-[var(--rollover)] transition-colors duration-200 pb-2"
               />
             </form>
           </div>
