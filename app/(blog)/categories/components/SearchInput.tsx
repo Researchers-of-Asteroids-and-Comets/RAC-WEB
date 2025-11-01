@@ -52,7 +52,7 @@ export default function SearchInput({ initialValue, selectedCategory }: SearchIn
       <div className="relative">
         <input
           type="text"
-          placeholder="Buscar por título o contenido..."
+          placeholder="Search by title or content..."
           value={searchValue}
           onChange={(e) => handleSearchChange(e.target.value)}
           className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:border-gray-400 shadow-sm bg-background relative z-10 transition-all duration-300"

@@ -12,12 +12,12 @@ export default async function AboutUsPage() {
     <div className="relative min-h-screen">
       <div className="relative container mx-auto px-5 z-10 flex flex-col min-h-screen text-dark">
         <h1 className="text-balance mb-12 text-6xl font-sans leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
-          {about?.title || "Sobre nosotros"}
+          {about?.title || "About Us"}
         </h1>
         {about?.content?.length ? (
           <PortableText className="mx-auto max-w-2xl" value={about.content as PortableTextBlock[]} />
         ) : (
-          <p className="text-neutral-600">Crea la página en el Studio y agrega contenido.</p>
+          <p className="text-neutral-600">Create the page in Studio and add content.</p>
         )}
       </div>
     </div>

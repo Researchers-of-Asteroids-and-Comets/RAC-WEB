@@ -79,7 +79,7 @@ export default function MenuOverlay() {
               <input
                 ref={searchInputRef}
                 type="text"
-                placeholder="Buscar"
+                placeholder="Search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleSearchKeyDown}

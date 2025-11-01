@@ -105,10 +105,10 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
       {/* Header */}
       <div className="mb-12">
         <h1 className="mb-4 text-4xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl">
-          Buscar Publicaciones
+          Search Posts
         </h1>
         <p className="text-lg text-neutral-600 mb-8">
-          Encuentra los artículos que más te interesen usando nuestro buscador y filtros por categoría
+          Find the articles that interest you most using our search engine and category filters
         </p>
       </div>
 
@@ -121,7 +121,7 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
           <div className="relative">
             <input
               type="text"
-              placeholder="Buscar por título o contenido..."
+              placeholder="Search by title or content..."
               value={localSearchTerm}
               onChange={(e) => handleSearchChange(e.target.value)}
               className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:border-gray-400 shadow-sm bg-background relative z-10 transition-all duration-300"
@@ -139,7 +139,7 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
                 : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
             }`}
           >
-            Todas las categorías
+            All categories
           </button>
           {validCategories.map((category) => (
             <button
@@ -161,12 +161,12 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
       <div className="mb-8">
         <p className="text-muted-foreground">
           {filteredPosts.length === 0 
-            ? "No se encontraron publicaciones"
-            : `${filteredPosts.length} ${filteredPosts.length === 1 ? 'publicación encontrada' : 'publicaciones encontradas'}`
+            ? "No posts found"
+            : `${filteredPosts.length} ${filteredPosts.length === 1 ? 'post found' : 'posts found'}`
           }
-          {urlSearchTerm && ` para "${urlSearchTerm}"`}
+          {urlSearchTerm && ` for "${urlSearchTerm}"`}
           {selectedCategory && validCategories.find(cat => cat.slug === selectedCategory) && 
-            ` en la categoría "${validCategories.find(cat => cat.slug === selectedCategory)?.name}"`
+            ` in category "${validCategories.find(cat => cat.slug === selectedCategory)?.name}"`
           }
         </p>
       </div>
@@ -218,17 +218,17 @@ export default function PostSearcher({ categories, posts }: PostSearcherProps) {
       ) : (
         <div className="text-center py-16">
           <h3 className="text-xl font-medium text-foreground mb-2">
-            No se encontraron publicaciones
+            No posts found
           </h3>
           <p className="text-muted-foreground mb-6">
-            Intenta ajustar tu búsqueda o seleccionar una categoría diferente
+            Try adjusting your search or selecting a different category
           </p>
           {(urlSearchTerm || selectedCategory) && (
             <button
               onClick={() => updateURL("", "")}
               className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/80 transition-colors"
             >
-              Limpiar filtros
+              Clear filters
             </button>
           )}
         </div>

@@ -29,7 +29,7 @@ export default function CategoryFilter({ categories, currentCategory }: Category
     <div className="mb-12">
       <div className="mb-8">
         <h2 className="mb-4 text-4xl font-bold leading-tight tracking-tighter md:text-5xl">
-          Explorar Categorías
+          Explore Categories
         </h2>
         <p className="text-lg text-neutral-600 mb-6">
           Descubre todos los temas que cubrimos en nuestro blog
@@ -39,7 +39,7 @@ export default function CategoryFilter({ categories, currentCategory }: Category
         <div className="relative max-w-md">
           <input
             type="text"
-            placeholder="Buscar categorías..."
+            placeholder="Search categories..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-foreground focus:border-transparent"
@@ -92,7 +92,7 @@ export default function CategoryFilter({ categories, currentCategory }: Category
       {filteredCategories.length === 0 && searchTerm && (
         <div className="text-center py-12">
           <p className="text-muted-foreground text-lg">
-            No se encontraron categorías que coincidan con &quot;{searchTerm}&quot;
+            No categories found matching &quot;{searchTerm}&quot;
           </p>
         </div>
       )}

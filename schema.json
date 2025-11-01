@@ -681,6 +681,16 @@
         },
         "optional": true
       },
+      "expertise": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "string"
+          }
+        },
+        "optional": true
+      },
       "picture": {
         "type": "objectAttribute",
         "value": {

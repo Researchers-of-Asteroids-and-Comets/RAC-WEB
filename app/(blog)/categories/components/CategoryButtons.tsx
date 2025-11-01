@@ -43,7 +43,7 @@ export default function CategoryButtons({ categories, selectedCategory, searchTe
             : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
         }`}
       >
-        Todas las categorías
+        All categories
       </button>
       {categories.map((category) => (
         <button

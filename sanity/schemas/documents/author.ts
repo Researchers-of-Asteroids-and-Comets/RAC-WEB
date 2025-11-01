@@ -90,6 +90,17 @@ export default defineType({
         },
       ],
     }),
+    // Areas of expertise/research fields
+    defineField({
+      name: "expertise",
+      title: "Áreas de Expertise",
+      type: "array",
+      of: [{ type: "string" }],
+      description: "Lista de áreas de investigación, especialidades o campos de expertise del autor",
+      options: {
+        layout: "tags",
+      },
+    }),
     defineField({
       name: "picture",
       title: "Picture",

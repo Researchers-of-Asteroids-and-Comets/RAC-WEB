@@ -46,16 +46,16 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           </p>
         )}
         <div className="flex items-center text-sm text-gray-500">
-          <span>{posts.length} {posts.length === 1 ? 'post' : 'posts'} en esta categoría</span>
+          <span>{posts.length} {posts.length === 1 ? 'post' : 'posts'} in this category</span>
         </div>
       </div>
 
       {/* Posts in current category */}
       <div className="mb-16">
         <h2 className="mb-8 text-4xl font-bold leading-tight tracking-tighter md:text-5xl">
-          Publicaciones
+          Posts
         </h2>
-        <Suspense fallback={<div>Cargando posts...</div>}>
+        <Suspense fallback={<div>Loading posts...</div>}>
           <MoreStories skip="" limit={100} posts={posts} />
         </Suspense>
       </div>
@@ -63,9 +63,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       {/* Category filter */}
       <div className="border-t pt-12">
         <h2 className="mb-8 text-4xl font-bold leading-tight tracking-tighter md:text-5xl">
-          Otras Categorías
+          Other Categories
         </h2>
-        <Suspense fallback={<div>Cargando categorías...</div>}>
+        <Suspense fallback={<div>Loading categories...</div>}>
           <CategoryFilter 
             categories={(categories || []).filter(cat => cat.name && cat.slug)} 
             currentCategory={resolvedParams.slug} 

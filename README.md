@@ -1,17 +1,17 @@
-# Blog de Divulgación
+# Research Blog
 
-Este es un proyecto de blog de divulgación desarrollado con tecnologías web modernas.
+This is a research blog project developed with modern web technologies.
 
-## Tecnologías Utilizadas
+## Technologies Used
 
-- **Next.js**: Un framework de React para construir aplicaciones web renderizadas en el servidor.
-- **React**: Una biblioteca de JavaScript para construir interfaces de usuario.
-- **TypeScript**: Un superconjunto de JavaScript que añade tipado estático.
-- **Sanity**: Un sistema de gestión de contenido (CMS) para contenido estructurado.
-- **Tailwind CSS**: Un framework de CSS para un diseño rápido y personalizado.
+- **Next.js**: A React framework for building server-rendered web applications.
+- **React**: A JavaScript library for building user interfaces.
+- **TypeScript**: A superset of JavaScript that adds static typing.
+- **Sanity**: A content management system (CMS) for structured content.
+- **Tailwind CSS**: A CSS framework for rapid and customized design.
 
-## En Dónde se Utiliza
+## Where It's Used
 
-Este proyecto se utiliza en el siguiente sitio web:
+This project is used on the following website:
 
-- [astrowow.org](https://astrowow.org)
+- [RAC Research Group](https://rac.org)

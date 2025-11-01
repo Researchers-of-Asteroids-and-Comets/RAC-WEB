@@ -48,7 +48,8 @@ export const authorBySlugQuery = defineQuery(`
     name,
     "slug": slug.current,
     picture,
-    bio
+    bio,
+    expertise
   }
 `);
 
@@ -57,6 +58,17 @@ export const authorSlugsQuery = defineQuery(`*[_type == "author" && defined(slug
 export const postsByAuthorQuery = defineQuery(`
   *[_type == "post" && defined(slug.current) && (author->slug.current == $slug || $slug in authors[]->slug.current)] | order(date desc, _updatedAt desc) {
     ${postFields}
+  }
+`);
+
+// Team page query - get all authors
+export const allAuthorsQuery = defineQuery(`
+  *[_type == "author" && defined(slug.current)] | order(name asc) {
+    name,
+    "slug": slug.current,
+    picture,
+    bio,
+    expertise
   }
 `);
 

@@ -96,22 +96,22 @@ export default async function RootLayout({
                 ) : (
                   <div className="flex flex-col items-center py-28 lg:flex-row">
                     <h3 className="mb-10 text-center text-4xl font-sans font-bold leading-tight tracking-tighter lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-5xl">
-                      @AstroWOW!
+                      Research on Asteroids and Comets - University of Antioquia
                     </h3>
                     <div className="flex flex-col items-center justify-center lg:w-1/2 lg:flex-row lg:pl-4">
                       <Link
                         href="/aboutus"
                         className="mx-3 mb-6 border border-foreground bg-foreground py-3 px-12 font-bold text-background transition-colors duration-200 hover:bg-background hover:text-foreground lg:mb-0 lg:px-8"
                       >
-                        Sobre nosotros
+                        About Us
                       </Link>
                        <CategoryLink />
                       {/*
                       <a
-                        href="https://github.com/astrowow"
+                        href="https://github.com/rac"
                         className="mx-3 font-bold hover:underline"
                       >
-                        Ver en GitHub
+                        View on GitHub
                       </a>*/}
                     </div>
                   </div>

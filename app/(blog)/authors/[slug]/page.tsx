@@ -31,6 +31,23 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
         <div className="mt-6">
           <Avatar name={author.name ?? "Anónimo"} picture={author.picture} slug={(author as any)?.slug ?? null} />
         </div>
+        
+        {(author as any).expertise?.length ? (
+          <div className="mt-6">
+            <h3 className="text-lg font-medium mb-3">Áreas de Expertise</h3>
+            <div className="flex flex-wrap gap-2">
+              {(author as any).expertise.map((area: string, index: number) => (
+                <span 
+                  key={index}
+                  className="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-sm text-sm font-light uppercase tracking-wide"
+                >
+                  {area}
+                </span>
+              ))}
+            </div>
+          </div>
+        ) : null}
+        
         {author.bio?.length ? (
           <div className="mt-8">
             <PortableText className="prose" value={author.bio as any} />

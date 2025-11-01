@@ -51,10 +51,10 @@ export default function SearchContainer({ categories, posts, searchParams }: Sea
       {/* Header */}
       <div className="mb-12">
         <h1 className="mb-4 text-4xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl">
-          Buscar Publicaciones
+          Search Posts
         </h1>
         <p className="text-lg text-neutral-600 mb-8">
-          Encuentra los artículos que más te interesen usando nuestro buscador y filtros por categoría
+          Find the articles that interest you most using our search engine and category filters
         </p>
       </div>
 
@@ -82,12 +82,12 @@ export default function SearchContainer({ categories, posts, searchParams }: Sea
       <div className="mb-8">
         <p className="text-gray-600">
           {filteredPosts.length === 0 
-            ? "No se encontraron publicaciones"
-            : `${filteredPosts.length} ${filteredPosts.length === 1 ? 'publicación encontrada' : 'publicaciones encontradas'}`
+            ? "No posts found"
+            : `${filteredPosts.length} ${filteredPosts.length === 1 ? 'post found' : 'posts found'}`
           }
-          {searchTerm && ` para "${searchTerm}"`}
+          {searchTerm && ` for "${searchTerm}"`}
           {selectedCategory && validCategories.find(cat => cat.slug === selectedCategory) && 
-            ` en la categoría "${validCategories.find(cat => cat.slug === selectedCategory)?.name}"`
+            ` in category "${validCategories.find(cat => cat.slug === selectedCategory)?.name}"`
           }
         </p>
       </div>

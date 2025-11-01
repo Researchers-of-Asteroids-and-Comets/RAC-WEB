@@ -88,10 +88,10 @@ export default function PostsGrid({ posts, searchTerm, selectedCategory, validCa
   return (
     <div className="text-center py-16">
       <h3 className="text-xl font-medium text-foreground mb-2">
-        No se encontraron publicaciones
+        No posts found
       </h3>
       <p className="text-muted-foreground mb-6">
-        Intenta ajustar tu búsqueda o seleccionar una categoría diferente
+        Try adjusting your search or selecting a different category
       </p>
       {(searchTerm || selectedCategory) && (
         <button
