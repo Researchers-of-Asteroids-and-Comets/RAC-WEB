@@ -13,9 +13,10 @@ export default function MenuOverlay() {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const links = [
-    { href: "/", label: "Inicio" },
-    { href: "/aboutus", label: "Nosotros" },
-    { href: "/categories", label: "Categorías" },
+    { href: "/", label: "Home" },
+    { href: "/aboutus", label: "About Us" },
+    { href: "/projects", label: "Projects" },
+    { href: "/team", label: "Team" },
   ];
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -43,7 +44,7 @@ export default function MenuOverlay() {
   return (
     <div
       className={[
-        "fixed inset-0 z-50 bg-[var(--black)] text-[var(--cream)] transition-opacity duration-200",
+        "fixed inset-0 z-50 bg-background transition-opacity duration-200",
         isMenuOpen
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none",
@@ -62,8 +63,8 @@ export default function MenuOverlay() {
               <Link href={href} onClick={closeMenu}>
                 <h1
                   className={[
-                    "text-[clamp(2rem,8vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-[var(--cream)] hover:underline",
-                    pathname === href ? "!text-[var(--rollover)] underline" : "",
+                    "text-[clamp(2rem,8vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-foreground hover:underline",
+                    pathname === href ? "!text-muted-foreground underline" : "",
                   ].join(" ")}
                 >
                   {label}
@@ -82,7 +83,7 @@ export default function MenuOverlay() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleSearchKeyDown}
-                className="w-full bg-transparent border-b-2 border-[var(--cream)] text-[clamp(2rem,8vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-[var(--cream)] placeholder-[var(--cream)]/70 focus:outline-none focus:border-[var(--rollover)] transition-colors duration-200 pb-2"
+                className="w-full bg-transparent border-b-2 border-muted-foreground text-[clamp(2rem,8vw,5rem)] leading-[0.9] font-extrabold tracking-[-0.02em] text-foreground placeholder-muted-foreground/70 focus:outline-none focus:border-[var(--rollover)] transition-colors duration-200 pb-2"
               />
             </form>
           </div>

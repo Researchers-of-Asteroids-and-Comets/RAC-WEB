@@ -14,47 +14,17 @@ export const description = [
         _key: "4a58edd077880",
         _type: "span",
         marks: [],
-        text: "Somos un grupo de divulgación con un gran amor por la ciencia y los telescopios. Siguenos en ",
+        text: "Advancing our understanding of asteroids and comets. The RAC group conducts research on orbital dynamics, physical composition, and solar system origins.",
       },
       {
         _key: "4a58edd077881",
         _type: "span",
-        marks: ["ec5b66c9b1e0"],
-        text: "📷 Instagram",
-      },
-      {
-        _key: "4a58edd077882",
-        _type: "span",
-        marks: [],
-        text: " y ",
-      },
-      {
-        _key: "4a58edd077883",
-        _type: "span",
-        marks: ["1f8991913ea8"],
-        text: "▶️ YouTube",
-      },
-      {
-        _key: "4a58edd077884",
-        _type: "span",
         marks: [],
         text: ".",
-      },
-    ],
-    markDefs: [
-      {
-        _key: "ec5b66c9b1e0",
-        _type: "link",
-        href: "https://instagram.com/grupoastrowow/",
-      },
-      {
-        _key: "1f8991913ea8",
-        _type: "link",
-        href: "https://www.youtube.com/@grupoastrowow",
       },
     ],
     style: "normal",
   },
 ];
 
-export const ogImageTitle = "Blog de Divulgación Científica - Universidad de Antioquia";
+export const ogImageTitle = "Research on Asteroids and Comets - University of Antioquia";

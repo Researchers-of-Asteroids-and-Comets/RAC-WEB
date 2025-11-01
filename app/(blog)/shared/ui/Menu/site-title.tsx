@@ -21,27 +21,24 @@ export default function SiteTitle({ className }: { className?: string }) {
     fetchSettings();
   }, []);
 
-  const colorClass = isMenuOpen ? "text-[var(--cream)]" : "";
-
   return (
     <h2
       className={[
         "grid grid-cols-[1fr_auto] items-center justify-between gap-x-4 py-0 font-medium tracking-tight text-2xl md:text-3xl",
-        colorClass,
         className,
       ]
         .filter(Boolean)
         .join(" ")}
     >
       <Link href="/" className="flex items-center gap-2 hover:underline">
-        <RACIcon size={32} className={colorClass} />
+        <RACIcon size={32} />
         {settings?.abbreviation || demo.abbreviation}
       </Link>
       <button
         type="button"
         onClick={toggleMenu}
         className="hover:underline"
-        aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+        aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
       >
         {isMenuOpen ? "Close" : "Menu"}
       </button>
