@@ -13,6 +13,16 @@
  */
 
 // Source: schema.json
+export type Role = {
+  _id: string;
+  _type: "role";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+};
+
 export type Page = {
   _id: string;
   _type: "page";
@@ -104,6 +114,7 @@ export type Author = {
     _ref: string;
     _type: "reference";
     _weak?: boolean;
+    _key: string;
     [internalGroqTypeReferenceTo]?: "role";
   }>;
   picture?: {
@@ -121,16 +132,6 @@ export type Author = {
   };
 };
 
-export type Role = {
-  _id: string;
-  _type: "role";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  description?: string;
-};
-
 export type Post = {
   _id: string;
   _type: "post";
@@ -138,6 +139,7 @@ export type Post = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  subtitle?: string;
   slug?: Slug;
   content?: Array<{
     children?: Array<{
@@ -530,7 +532,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Page | Author | Post | Category | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Role | Page | Author | Post | Category | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./app/(blog)/categories/[slug]/page.tsx
 // Variable: categorySlugs
@@ -670,7 +672,7 @@ export type AboutmeQueryResult = {
   }>;
 } | null;
 // Variable: heroQuery
-// Query: *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {    content,      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
+// Query: *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {    content,      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  subtitle,  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
 export type HeroQueryResult = {
   content: Array<{
     children?: Array<{
@@ -726,6 +728,7 @@ export type HeroQueryResult = {
   _id: string;
   status: "draft" | "published";
   title: string | "Untitled";
+  subtitle: string | null;
   slug: string | null;
   excerpt: string | null;
   coverImage: {
@@ -765,11 +768,12 @@ export type HeroQueryResult = {
   }> | null;
 } | null;
 // Variable: moreStoriesQuery
-// Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
+// Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  subtitle,  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
 export type MoreStoriesQueryResult = Array<{
   _id: string;
   status: "draft" | "published";
   title: string | "Untitled";
+  subtitle: string | null;
   slug: string | null;
   excerpt: string | null;
   coverImage: {
@@ -809,7 +813,7 @@ export type MoreStoriesQueryResult = Array<{
   }> | null;
 }>;
 // Variable: postQuery
-// Query: *[_type == "post" && slug.current == $slug] [0] {    content,      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
+// Query: *[_type == "post" && slug.current == $slug] [0] {    content,      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  subtitle,  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
 export type PostQueryResult = {
   content: Array<{
     children?: Array<{
@@ -865,6 +869,7 @@ export type PostQueryResult = {
   _id: string;
   status: "draft" | "published";
   title: string | "Untitled";
+  subtitle: string | null;
   slug: string | null;
   excerpt: string | null;
   coverImage: {
@@ -904,7 +909,7 @@ export type PostQueryResult = {
   }> | null;
 } | null;
 // Variable: authorBySlugQuery
-// Query: *[_type == "author" && slug.current == $slug][0]{    name,    "slug": slug.current,    picture,    bio,    expertise  }
+// Query: *[_type == "author" && slug.current == $slug][0]{    name,    "slug": slug.current,    picture,    bio,    "roles": roles[]->{title}  }
 export type AuthorBySlugQueryResult = {
   name: string | null;
   slug: string | null;
@@ -949,11 +954,12 @@ export type AuthorSlugsQueryResult = Array<{
   slug: string | null;
 }>;
 // Variable: postsByAuthorQuery
-// Query: *[_type == "post" && defined(slug.current) && (author->slug.current == $slug || $slug in authors[]->slug.current)] | order(date desc, _updatedAt desc) {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
+// Query: *[_type == "post" && defined(slug.current) && (author->slug.current == $slug || $slug in authors[]->slug.current)] | order(date desc, _updatedAt desc) {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  subtitle,  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
 export type PostsByAuthorQueryResult = Array<{
   _id: string;
   status: "draft" | "published";
   title: string | "Untitled";
+  subtitle: string | null;
   slug: string | null;
   excerpt: string | null;
   coverImage: {
@@ -993,7 +999,7 @@ export type PostsByAuthorQueryResult = Array<{
   }> | null;
 }>;
 // Variable: allAuthorsQuery
-// Query: *[_type == "author" && defined(slug.current)] | order(name asc) {    name,    "slug": slug.current,    picture,    bio,    expertise  }
+// Query: *[_type == "author" && defined(slug.current)] | order(name asc) {    name,    "slug": slug.current,    picture,    bio,    "roles": roles[]->{title}  }
 export type AllAuthorsQueryResult = Array<{
   name: string | null;
   slug: string | null;
@@ -1031,13 +1037,57 @@ export type AllAuthorsQueryResult = Array<{
   roles: Array<{
     title: string | null;
   }> | null;
-}>
+}>;
+// Variable: authorsQuery
+// Query: *[_type == "author"]{    name,    "slug": slug.current,    picture,    bio,    "roles": roles[]->{title, "slug": slug.current, hierarchy, color}  }
+export type AuthorsQueryResult = Array<{
+  name: string | null;
+  slug: string | null;
+  picture: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  bio: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  roles: Array<{
+    title: string | null;
+    slug: null;
+    hierarchy: null;
+    color: null;
+  }> | null;
+}>;
 // Variable: postsByCategoryQuery
-// Query: *[_type == "post" && defined(slug.current) && $slug in categories[]->slug.current] | order(date desc, _updatedAt desc) {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
+// Query: *[_type == "post" && defined(slug.current) && $slug in categories[]->slug.current] | order(date desc, _updatedAt desc) {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  subtitle,  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
 export type PostsByCategoryQueryResult = Array<{
   _id: string;
   status: "draft" | "published";
   title: string | "Untitled";
+  subtitle: string | null;
   slug: string | null;
   excerpt: string | null;
   coverImage: {
@@ -1092,11 +1142,12 @@ export type CategoryBySlugQueryResult = {
   description: string | null;
 } | null;
 // Variable: searchPostsQuery
-// Query: *[_type == "post" && defined(slug.current) &&     ($searchTerm == "" || title match $searchTerm + "*" || excerpt match $searchTerm + "*") &&    ($categorySlug == "" || $categorySlug in categories[]->slug.current)  ] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
+// Query: *[_type == "post" && defined(slug.current) &&     ($searchTerm == "" || title match $searchTerm + "*" || excerpt match $searchTerm + "*") &&    ($categorySlug == "" || $categorySlug in categories[]->slug.current)  ] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  subtitle,  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
 export type SearchPostsQueryResult = Array<{
   _id: string;
   status: "draft" | "published";
   title: string | "Untitled";
+  subtitle: string | null;
   slug: string | null;
   excerpt: string | null;
   coverImage: {
@@ -1136,11 +1187,12 @@ export type SearchPostsQueryResult = Array<{
   }> | null;
 }>;
 // Variable: allPostsQuery
-// Query: *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
+// Query: *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  subtitle,  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "authors": select(    count(authors) > 0 => authors[]->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current},    defined(author) => [author->{"name": coalesce(name, "Anonymous"), picture, "slug": slug.current}],    []  ),  "categories": categories[]->{name, "slug": slug.current},  }
 export type AllPostsQueryResult = Array<{
   _id: string;
   status: "draft" | "published";
   title: string | "Untitled";
+  subtitle: string | null;
   slug: string | null;
   excerpt: string | null;
   coverImage: {
@@ -1188,17 +1240,18 @@ declare module "@sanity/client" {
     "*[_type == \"post\" && defined(slug.current)]{\"slug\": slug.current}": PostSlugsResult;
     "*[_type == \"settings\"][0]": SettingsQueryResult;
     "\n  *[_type == \"page\" && slug.current == \"about-me\"][0]\n": AboutmeQueryResult;
-    "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": HeroQueryResult;
-    "\n  *[_type == \"post\" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": MoreStoriesQueryResult;
-    "\n  *[_type == \"post\" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": PostQueryResult;
-    "\n  *[_type == \"author\" && slug.current == $slug][0]{\n    name,\n    \"slug\": slug.current,\n    picture,\n    bio,\n    expertise\n  }\n": AuthorBySlugQueryResult;
+    "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  subtitle,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": HeroQueryResult;
+    "\n  *[_type == \"post\" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  subtitle,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": MoreStoriesQueryResult;
+    "\n  *[_type == \"post\" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  subtitle,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": PostQueryResult;
+    "\n  *[_type == \"author\" && slug.current == $slug][0]{\n    name,\n    \"slug\": slug.current,\n    picture,\n    bio,\n    \"roles\": roles[]->{title}\n  }\n": AuthorBySlugQueryResult;
     "*[_type == \"author\" && defined(slug.current)]{\"slug\": slug.current}": AuthorSlugsQueryResult;
-    "\n  *[_type == \"post\" && defined(slug.current) && (author->slug.current == $slug || $slug in authors[]->slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": PostsByAuthorQueryResult;
-    "\n  *[_type == \"author\" && defined(slug.current)] | order(name asc) {\n    name,\n    \"slug\": slug.current,\n    picture,\n    bio,\n    expertise\n  }\n": AllAuthorsQueryResult;
-    "\n  *[_type == \"post\" && defined(slug.current) && $slug in categories[]->slug.current] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": PostsByCategoryQueryResult;
+    "\n  *[_type == \"post\" && defined(slug.current) && (author->slug.current == $slug || $slug in authors[]->slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  subtitle,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": PostsByAuthorQueryResult;
+    "\n  *[_type == \"author\" && defined(slug.current)] | order(name asc) {\n    name,\n    \"slug\": slug.current,\n    picture,\n    bio,\n    \"roles\": roles[]->{title}\n  }\n": AllAuthorsQueryResult;
+    "\n  *[_type == \"author\"]{\n    name,\n    \"slug\": slug.current,\n    picture,\n    bio,\n    \"roles\": roles[]->{title, \"slug\": slug.current, hierarchy, color}\n  }\n": AuthorsQueryResult;
+    "\n  *[_type == \"post\" && defined(slug.current) && $slug in categories[]->slug.current] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  subtitle,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": PostsByCategoryQueryResult;
     "\n  *[_type == \"category\" && defined(slug.current)] | order(name asc) {\n    name,\n    \"slug\": slug.current,\n    description,\n    \"postCount\": count(*[_type == \"post\" && defined(slug.current) && references(^._id)])\n  }\n": AllCategoriesQueryResult;
     "\n  *[_type == \"category\" && slug.current == $slug][0] {\n    name,\n    \"slug\": slug.current,\n    description\n  }\n": CategoryBySlugQueryResult;
-    "\n  *[_type == \"post\" && defined(slug.current) && \n    ($searchTerm == \"\" || title match $searchTerm + \"*\" || excerpt match $searchTerm + \"*\") &&\n    ($categorySlug == \"\" || $categorySlug in categories[]->slug.current)\n  ] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": SearchPostsQueryResult;
-    "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": AllPostsQueryResult;
+    "\n  *[_type == \"post\" && defined(slug.current) && \n    ($searchTerm == \"\" || title match $searchTerm + \"*\" || excerpt match $searchTerm + \"*\") &&\n    ($categorySlug == \"\" || $categorySlug in categories[]->slug.current)\n  ] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  subtitle,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": SearchPostsQueryResult;
+    "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  subtitle,\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": AllPostsQueryResult;
   }
 }
