@@ -97,7 +97,11 @@ export default defineType({
           type: "string",
           validation: (rule) => {
             return rule.custom((alt, context) => {
-              if ((context.document?.ogImage as any)?.asset?._ref && !alt) {
+              type ImageField = { asset?: { _ref?: string } };
+              type DocWithOgImage = { ogImage?: ImageField };
+              const doc = context.document as DocWithOgImage | undefined;
+              const hasAssetRef = typeof doc?.ogImage?.asset?._ref === "string";
+              if (hasAssetRef && !alt) {
                 return "Required";
               }
               return true;

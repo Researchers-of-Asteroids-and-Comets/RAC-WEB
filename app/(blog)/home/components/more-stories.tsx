@@ -7,20 +7,25 @@ import BadgeCategories from "../../categories/components/BadgeCategories";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { moreStoriesQuery } from "@/sanity/lib/queries";
+import type { MoreStoriesQueryResult } from "@/sanity.types";
 
-export default async function MoreStories(params: {
+type MoreStoriesParams = {
   skip: string;
   limit: number;
-  posts?: any[];
-}) {
-  const data = params.posts
+  posts?: MoreStoriesQueryResult;
+};
+
+type MoreStoriesPost = MoreStoriesQueryResult[number];
+
+export default async function MoreStories(params: MoreStoriesParams) {
+  const data: MoreStoriesQueryResult = params.posts
     ? params.posts
     : await sanityFetch({ query: moreStoriesQuery, params });
 
   return (
     <>
       <div className="mb-32 grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
-        {data?.map((post: any) => {
+        {data?.map((post: MoreStoriesPost) => {
           const { _id, title, slug, coverImage, excerpt, authors, categories } = post;
           return (
             <article
@@ -49,7 +54,7 @@ export default async function MoreStories(params: {
                 )}
                 {authors?.length ? (
                   <div className="flex flex-wrap gap-3">
-                    {authors.map((a: any) => (
+                    {authors.map((a) => (
                       <Avatar
                         key={(a.slug || a.name) + "-list"}
                         name={a.name}

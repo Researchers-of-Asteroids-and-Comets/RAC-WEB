@@ -8,14 +8,15 @@ import { sanityFetchClient } from "@/sanity/lib/fetch-client";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { useMenu } from "./MenuContext";
 import { RACIcon } from "../icons/rac-icon";
+import type { SettingsQueryResult } from "@/sanity.types";
 
 export default function SiteTitle({ className }: { className?: string }) {
-  const [settings, setSettings] = useState<any>(null);
+  const [settings, setSettings] = useState<SettingsQueryResult | null>(null);
   const { isMenuOpen, toggleMenu } = useMenu();
 
   useEffect(() => {
     const fetchSettings = async () => {
-      const data = await sanityFetchClient({ query: settingsQuery, stega: false });
+      const data = (await sanityFetchClient({ query: settingsQuery, stega: false })) as SettingsQueryResult;
       setSettings(data);
     };
     fetchSettings();
@@ -32,7 +33,7 @@ export default function SiteTitle({ className }: { className?: string }) {
     >
       <Link href="/" className="flex items-center gap-2 hover:underline">
         <RACIcon size={32} />
-        {settings?.abbreviation || demo.abbreviation}
+        {demo.abbreviation}
       </Link>
       <button
         type="button"

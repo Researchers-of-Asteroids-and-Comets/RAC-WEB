@@ -129,10 +129,16 @@ export default function CustomPortableText({
           return null;
         }
 
+        type GalleryImage = {
+          asset?: { _ref?: string };
+          alt?: string | null;
+          caption?: string | null;
+        };
+
         return (
           <div className="my-6">
             <div className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4">
-              {images.map((img: any, idx: number) => {
+              {images.map((img: GalleryImage, idx: number) => {
                 if (!img?.asset?._ref) return null;
                 return (
                   <figure key={idx} className="snap-start shrink-0 w-full sm:w-[85%] md:w-[70%]">

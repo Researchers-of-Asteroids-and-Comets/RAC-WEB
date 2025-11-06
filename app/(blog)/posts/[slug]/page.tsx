@@ -16,6 +16,9 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { postQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import { client } from "@/sanity/lib/client";
+import type { PostQueryResult } from "@/sanity.types";
+type PostType = NonNullable<PostQueryResult>;
+type PostAuthor = NonNullable<PostType["authors"]>[number];
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -47,7 +50,7 @@ export async function generateMetadata(
 
   return {
     authors: Array.isArray(post?.authors)
-      ? post!.authors!.filter(Boolean).map((a: any) => ({ name: a?.name }))
+      ? post!.authors!.filter(Boolean).map((a: PostAuthor) => ({ name: a?.name }))
       : [],
     title: post?.title ?? undefined,
     description: post?.excerpt ?? undefined,
@@ -73,7 +76,7 @@ export default async function PostPage({ params }: Props) {
         <div className="hidden md:mb-12 md:block">
           {post.authors?.length ? (
             <div className="flex flex-wrap gap-3">
-              {post.authors.map((a: any) => (
+              {post.authors.map((a: PostAuthor) => (
                 <Avatar key={(a.slug || a.name) + "-post-top"} name={a.name} picture={a.picture} slug={a.slug} />
               ))}
             </div>
@@ -91,7 +94,7 @@ export default async function PostPage({ params }: Props) {
           <div className="mb-6 block md:hidden">
             {post.authors?.length ? (
               <div className="flex flex-wrap gap-3">
-                {post.authors.map((a: any) => (
+                {post.authors.map((a: PostAuthor) => (
                   <Avatar key={(a.slug || a.name) + "-post-mobile"} name={a.name} picture={a.picture} slug={a.slug} />
                 ))}
               </div>

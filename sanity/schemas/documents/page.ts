@@ -1,5 +1,6 @@
 import { DocumentTextIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import type { Rule } from "sanity";
 
 /**
  * Página genérica (About Me) editable desde el Studio.
@@ -100,7 +101,7 @@ export default defineType({
               type: "string",
               title: "Alternative text",
               description: "Important for SEO and accessibility.",
-              validation: (rule: any) => rule.required(),
+              validation: (rule: Rule) => rule.required(),
             },
             { name: "caption", type: "string", title: "Caption" },
           ],
@@ -124,7 +125,7 @@ export default defineType({
                       type: "string",
                       title: "Alternative text",
                       description: "Important for SEO and accessibility.",
-                      validation: (rule: any) => rule.required(),
+                      validation: (rule: Rule) => rule.required(),
                     },
                     { name: "caption", type: "string", title: "Caption" },
                   ],

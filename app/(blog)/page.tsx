@@ -16,8 +16,12 @@ import CategoryLink from "./categories/components/CategoryLink";
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { heroQuery, settingsQuery } from "@/sanity/lib/queries";
+import type { HeroQueryResult } from "@/sanity.types";
+import type { PortableTextBlock } from "next-sanity";
+type Hero = NonNullable<HeroQueryResult>;
+type HeroAuthor = NonNullable<Hero["authors"]>[number];
 
-function Intro(props: { title: string | null | undefined; description: any }) {
+function Intro(props: { title: string | null | undefined; description: PortableTextBlock[] | null | undefined }) {
   const title = props.title || demo.title;
   const description = props.description?.length
     ? props.description
@@ -75,10 +79,10 @@ function HeroPost({
   title: string | null;
   slug: string | null;
   excerpt: string | null;
-  coverImage: any;
+  coverImage: Hero["coverImage"];
   date: string;
-  authors: Array<{ name: string; picture: any; slug: string | null }> | null;
-  categories: Array<{ name: string; slug: string }> | null;
+  authors: Hero["authors"];
+  categories: Hero["categories"];
 }) {
   return (
     <article className="overflow-hidden shadow-lg md:grid md:bg-transparent md:shadow-none mb-20 md:mb-28">
@@ -112,7 +116,7 @@ function HeroPost({
           )}
           {authors?.length ? (
             <div className="flex flex-wrap gap-3">
-              {authors.map((a) => (
+              {authors.map((a: HeroAuthor) => (
                 <Avatar key={(a.slug || a.name) + "-hero"} name={a.name} picture={a.picture} slug={a.slug} />
               ))}
             </div>
@@ -142,8 +146,8 @@ export default async function Page() {
             coverImage={heroPost.coverImage}
             excerpt={heroPost.excerpt}
             date={heroPost.date}
-            authors={(heroPost.authors?.filter((author): author is { name: string; picture: any; slug: string } => author.name !== null && author.slug !== null && author.picture !== null) ?? [])}
-            categories={(heroPost.categories?.filter((category): category is { name: string; slug: string } => category.name !== null && category.slug !== null) ?? [])}
+            authors={heroPost.authors ?? []}
+            categories={heroPost.categories ?? []}
            />
         ) : (
           <Onboarding />

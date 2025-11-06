@@ -2,24 +2,15 @@ import { Suspense } from "react";
 import SearchInput from "@/app/(blog)/categories/components/SearchInput";
 import CategoryButtons from "@/app/(blog)/categories/components/CategoryButtons";
 import PostsGrid from "@/app/(blog)/categories/components/PostsGrid";
+import type {
+  AllCategoriesQueryResult,
+  SearchPostsQueryResult,
+  PostsByCategoryQueryResult,
+} from "@/sanity.types";
 
-interface Category {
-  name: string | null;
-  slug: string | null;
-  description?: string | null;
-  postCount: number;
-}
+type Category = AllCategoriesQueryResult[number];
 
-interface Post {
-  _id: string;
-  title: string | null;
-  slug: string | null;
-  excerpt: string | null;
-  coverImage: any;
-  date: string;
-  authors: Array<{ name: string; picture: any; slug: string | null }> | null;
-  categories: Array<{ name: string | null; slug: string | null }> | null;
-}
+type Post = SearchPostsQueryResult[number] | PostsByCategoryQueryResult[number];
 
 interface SearchContainerProps {
   categories: Category[];

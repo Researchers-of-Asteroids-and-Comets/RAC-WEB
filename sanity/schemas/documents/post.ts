@@ -2,6 +2,7 @@ import { DocumentTextIcon } from "@sanity/icons";
 import { format, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
 import { defineField, defineType } from "sanity";
+import type { Rule } from "sanity";
 
 import authorType from "./author";
 
@@ -127,7 +128,7 @@ export default defineType({
               type: "string",
               title: "Alternative text",
               description: "Important for SEO and accessibility.",
-              validation: (rule: any) => rule.required(),
+              validation: (rule: Rule) => rule.required(),
             },
             {
               name: "caption",
@@ -156,7 +157,7 @@ export default defineType({
                       type: "string",
                       title: "Alternative text",
                       description: "Important for SEO and accessibility.",
-                      validation: (rule: any) => rule.required(),
+                      validation: (rule: Rule) => rule.required(),
                     },
                     {
                       name: "caption",
@@ -201,7 +202,11 @@ export default defineType({
           description: "Important for SEO and accessiblity.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
-              if ((context.document?.coverImage as any)?.asset?._ref && !alt) {
+              type ImageField = { asset?: { _ref?: string } };
+              type DocWithCover = { coverImage?: ImageField };
+              const doc = context.document as DocWithCover | undefined;
+              const hasAssetRef = typeof doc?.coverImage?.asset?._ref === "string";
+              if (hasAssetRef && !alt) {
                 return "Required";
               }
               return true;

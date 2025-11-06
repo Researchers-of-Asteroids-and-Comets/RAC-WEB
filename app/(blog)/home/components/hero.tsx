@@ -8,6 +8,7 @@ import { sanityFetchClient } from "@/sanity/lib/fetch-client";
 import { heroQuery } from "@/sanity/lib/queries";
 import { RACIcon } from "../../shared/ui/icons/rac-icon";
 import type { PortableTextBlock } from "next-sanity";
+import type { HeroQueryResult } from "@/sanity.types";
 
 export default function Hero() {
   const title = demo.title;
@@ -24,7 +25,7 @@ export default function Hero() {
     { href: "/team", label: "Team" },
   ];
 
-  const [heroPost, setHeroPost] = useState<any>(null);
+  const [heroPost, setHeroPost] = useState<HeroQueryResult | null>(null);
 
   useEffect(() => {
     const fetchHero = async () => {
@@ -177,7 +178,7 @@ export default function Hero() {
           _type: "span",
           text,
           marks: [],
-        } as any,
+        },
       ],
     });
 
@@ -186,9 +187,9 @@ export default function Hero() {
       try {
         // Extraer texto plano de todos los bloques y dividir en oraciones
         const text = value
-          .map((b: any) =>
+          .map((b) =>
             Array.isArray(b?.children)
-              ? b.children.map((c: any) => c?.text || "").join("")
+              ? b.children.map((c) => (typeof c?.text === "string" ? c.text : "")).join("")
               : ""
           )
           .join(" ");
@@ -202,6 +203,6 @@ export default function Hero() {
 
     // Si es un string simple, dividirlo en oraciones y crear bloques
     const str = (value as string) || "";
-    const sentences = str.match(/[^.!?\u2026]+[.!?\u2026]+/g) || [str];
-    return sentences.map((s) => makeBlock(s.trim()));
+  const sentences = str.match(/[^.!?\u2026]+[.!?\u2026]+/g) || [str];
+  return sentences.map((s) => makeBlock(s.trim()));
   };

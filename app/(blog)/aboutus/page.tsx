@@ -4,9 +4,10 @@ import PortableText from "../shared/ui/portable-text";
 import { type PortableTextBlock } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { aboutmeQuery } from "@/sanity/lib/queries";
+import type { AboutmeQueryResult } from "@/sanity.types";
 
 export default async function AboutUsPage() {
-  const about = (await sanityFetch({ query: aboutmeQuery })) as any;
+  const about = (await sanityFetch({ query: aboutmeQuery })) as AboutmeQueryResult;
 
   return (
     <div className="relative min-h-screen">

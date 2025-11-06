@@ -111,7 +111,11 @@ export default defineType({
           description: "Important for SEO and accessiblity.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
-              if ((context.document?.picture as any)?.asset?._ref && !alt) {
+              type ImageField = { asset?: { _ref?: string } };
+              type DocWithPicture = { picture?: ImageField };
+              const doc = context.document as DocWithPicture | undefined;
+              const hasAssetRef = typeof doc?.picture?.asset?._ref === "string";
+              if (hasAssetRef && !alt) {
                 return "Required";
               }
               return true;

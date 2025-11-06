@@ -9,6 +9,8 @@ import PortableText from "../../shared/ui/portable-text";
 import { client } from "@/sanity/lib/client";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { authorBySlugQuery, authorSlugsQuery, postsByAuthorQuery } from "@/sanity/lib/queries";
+import type { AuthorBySlugQueryResult, PostsByAuthorQueryResult } from "@/sanity.types";
+import type { PortableTextBlock } from "next-sanity";
 
 export async function generateStaticParams() {
   const data = await client.fetch(authorSlugsQuery);
@@ -20,23 +22,23 @@ export async function generateStaticParams() {
 export default async function AuthorPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  const author = await sanityFetch({ query: authorBySlugQuery, params: { slug } });
+  const author = (await sanityFetch({ query: authorBySlugQuery, params: { slug } })) as AuthorBySlugQueryResult;
   if (!author) return notFound();
 
-  const posts = await sanityFetch({ query: postsByAuthorQuery, params: { slug } });
+  const posts = (await sanityFetch({ query: postsByAuthorQuery, params: { slug } })) as PostsByAuthorQueryResult;
 
   return (
     <div className="container mx-auto px-5">
       <header className="mb-12">
         <div className="mt-6">
-          <Avatar name={author.name ?? "Anónimo"} picture={author.picture} slug={(author as any)?.slug ?? null} />
+          <Avatar name={author.name ?? "Anónimo"} picture={author.picture} slug={author.slug ?? null} />
         </div>
         
-        {(author as any).roles?.length ? (
+        {author.roles?.length ? (
           <div className="mt-6">
             <h3 className="text-lg font-medium mb-3">Organizational Roles</h3>
             <div className="flex flex-wrap gap-2">
-              {(author as any).roles.map((role: any, index: number) => (
+              {author.roles.map((role, index: number) => (
                 <span 
                   key={index}
                   className="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-sm text-sm font-light uppercase tracking-wide"
@@ -50,7 +52,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
         
         {author.bio?.length ? (
           <div className="mt-8">
-            <PortableText className="prose" value={author.bio as any} />
+            <PortableText className="prose" value={author.bio as PortableTextBlock[]} />
           </div>
         ) : null}
       </header>
@@ -61,7 +63,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
           <p className="text-neutral-500">Este autor aún no tiene publicaciones.</p>
         ) : (
           <div className="grid grid-cols-1 mb-32 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
-            {posts.map((post: any) => {
+            {posts.map((post) => {
               const { _id, title, slug: postSlug, coverImage, excerpt, authors, date } = post;
               return (
                 <article key={_id}>
@@ -83,7 +85,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
                   )}
                   {authors?.length ? (
                     <div className="flex flex-wrap gap-3">
-                      {authors.map((a: any) => (
+                      {authors.map((a) => (
                         <Avatar key={(a.slug || a.name) + "-author-list"} name={a.name ?? "Anónimo"} picture={a.picture} slug={a.slug ?? null} />
                       ))}
                     </div>

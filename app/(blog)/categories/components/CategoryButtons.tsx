@@ -2,12 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
+import type { AllCategoriesQueryResult } from "@/sanity.types";
 
-interface Category {
-  name: string | null;
-  slug: string | null;
-  postCount: number;
-}
+type Category = AllCategoriesQueryResult[number];
 
 interface CategoryButtonsProps {
   categories: Category[];

@@ -7,24 +7,14 @@ import Avatar from "../../shared/ui/avatar";
 import CoverImage from "../../shared/ui/cover-image";
 import DateComponent from "../../shared/ui/date";
 import BadgeCategories from "./BadgeCategories";
+import type {
+  SearchPostsQueryResult,
+  AllCategoriesQueryResult,
+} from "@/sanity.types";
 
-interface Category {
-  name: string | null;
-  slug: string | null;
-  description?: string | null;
-  postCount: number;
-}
+type Category = AllCategoriesQueryResult[number];
 
-interface Post {
-  _id: string;
-  title: string | null;
-  slug: string | null;
-  excerpt: string | null;
-  coverImage: any;
-  date: string;
-  authors: Array<{ name: string; picture: any; slug: string | null }> | null;
-  categories: Array<{ name: string | null; slug: string | null }> | null;
-}
+type Post = SearchPostsQueryResult[number];
 
 interface PostSearcherProps {
   categories: Category[];

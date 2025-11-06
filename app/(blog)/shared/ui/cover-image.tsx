@@ -1,9 +1,21 @@
 import { Image } from "next-sanity/image";
 
 import { urlForImage } from "@/sanity/lib/utils";
+import type {
+  PostQueryResult,
+  MoreStoriesQueryResult,
+  SearchPostsQueryResult,
+  PostsByCategoryQueryResult,
+} from "@/sanity.types";
+
+type CoverImageSource =
+  | NonNullable<PostQueryResult>["coverImage"]
+  | MoreStoriesQueryResult[number]["coverImage"]
+  | SearchPostsQueryResult[number]["coverImage"]
+  | PostsByCategoryQueryResult[number]["coverImage"];
 
 interface CoverImageProps {
-  image: any;
+  image: CoverImageSource;
   priority?: boolean;
 }
 
