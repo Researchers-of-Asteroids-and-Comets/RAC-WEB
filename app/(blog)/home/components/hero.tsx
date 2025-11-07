@@ -50,51 +50,7 @@ export default function Hero() {
 
   return (
     <div className="bg-background text-foreground">
-      <div className="grid grid-rows-2 gap-2 px-8">
-      <div className="flex items-center gap-4">
-        <RACIcon size={64} />
-        <span className="text-7xl leading-none">{abbreviation}</span>
-        <div className="text-sm text-muted-foreground max-w-3xl">
-          <PortableText className="prose-sm prose-invert" value={splitDescriptionIntoParagraphs(description)} />
-        </div>
-      </div>
-      <header
-        role="banner"
-        className="bg-background flex justify-between items-center"
-        >
-        
-        <nav className="hidden md:flex space-x-4">
-          {links.map(({ href, label }) => (
-            <Link key={href} href={href} className="hover:underline">
-              {label}
-            </Link>
-          ))}
-        </nav>
-        <div className="relative ">
-          <input
-            type="search"
-            placeholder="Search"
-            className="bg-muted text-muted-foreground px-4 py-2"
-          />
-          <button className="absolute right-2 top-1/2 -translate-y-1/2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-            </svg>
-          </button>
-        </div>
-      </header>
-        </div>
+      
 
       <main role="main" className="p-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

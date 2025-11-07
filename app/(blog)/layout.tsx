@@ -18,6 +18,7 @@ import { MenuProvider } from "./shared/ui/Menu/MenuContext";
 import SiteTitle from "./shared/ui/Menu/site-title";
 import MainWrapper from "./shared/wrappers/MainWrapper";
 import CategoryLink from "./categories/components/CategoryLink";
+import NewNvabar from "./shared/ui/new-nvabar";
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -75,16 +76,7 @@ export default async function RootLayout({
           <section className="min-h-screen">
             {isDraftMode && <AlertBanner />}
             <MenuOverlay />
-            <header
-              className="fixed left-0 z-[60] w-full bg-transparent h-16 md:h-20 flex items-center"
-              style={{ top: "var(--banner-height, 0px)" }}
-            >
-              <div className="container mx-auto px-5 h-full flex items-center">
-                <nav aria-label="Navegación principal" className="w-full">
-                  <SiteTitle />
-                </nav>
-              </div>
-            </header>
+            <NewNvabar />
             <MainWrapper>{children}</MainWrapper>
             <footer className="bg-accent-1 border-accent-2 border-t">
               <div className="container mx-auto px-5">
