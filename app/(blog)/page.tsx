@@ -2,15 +2,11 @@ import Link from "next/link";
 import { Suspense } from "react";
 import Image from "next/image";
 
-import Avatar from "./shared/ui/avatar";
-import CoverImage from "./shared/ui/cover-image";
-import DateComponent from "./shared/ui/date";
 import MoreStories from "./home/components/more-stories";
 import Onboarding from "./home/components/onboarding";
 import Hero from "./home/components/hero";
 import PortableText from "./shared/ui/portable-text";
-import BadgeCategories from "./categories/components/BadgeCategories";
-import CategoryLink from "./categories/components/CategoryLink";
+// Removed unused imports related to HeroPost
 
 // import type { HeroQueryResult } from "@/sanity.types"; // legacy type no longer needed
 import * as demo from "@/sanity/lib/demo";
@@ -67,66 +63,6 @@ function Intro(props: { title: string | null | undefined; description: PortableT
   );
 }
 
-function HeroPost({
-  title,
-  slug,
-  excerpt,
-  coverImage,
-  date,
-  authors,
-  categories,
-}: {
-  title: string | null;
-  slug: string | null;
-  excerpt: string | null;
-  coverImage: Hero["coverImage"];
-  date: string;
-  authors: Hero["authors"];
-  categories: Hero["categories"];
-}) {
-  return (
-    <article className="overflow-hidden shadow-lg md:grid md:bg-transparent md:shadow-none mb-20 md:mb-28">
-      <Link
-        className="group mb-8 block md:mb-16 md:row-start-1"
-        href={`/posts/${slug}`}
-      >
-        <CoverImage image={coverImage} priority />
-      </Link>
-      <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 md:row-start-2 p-5 md:p-0">
-        <div>
-          <h3 className="text-pretty mb-4 text-4xl leading-tight lg:text-6xl">
-            <Link href={`/posts/${slug}`} className="hover:underline">
-              {title}
-            </Link>
-          </h3>
-          <div className="mb-4 text-neutral-500 italic text-lg md:mb-0">
-            <DateComponent dateString={date} />
-          </div>
-          {categories?.length ? (
-            <div className="mt-4">
-              <BadgeCategories categories={categories} />
-            </div>
-          ) : null}
-        </div>
-        <div>
-          {excerpt && (
-            <p className="text-pretty font-sans text-neutral-500 mb-4 text-lg leading-relaxed">
-              {excerpt}
-            </p>
-          )}
-          {authors?.length ? (
-            <div className="flex flex-wrap gap-3">
-              {authors.map((a: HeroAuthor) => (
-                <Avatar key={(a.slug || a.name) + "-hero"} name={a.name} picture={a.picture} slug={a.slug} />
-              ))}
-            </div>
-          ) : null}
-        </div>
-      </div>
-    </article>
-  );
-}
-
 export default async function Page() {
   const [settings, heroPost] = await Promise.all([
     sanityFetch({
@@ -138,20 +74,8 @@ export default async function Page() {
   return (
     <>
       <Hero />
-      <div className="container mx-auto px-5">
-        {heroPost ? (
-          <HeroPost
-            title={heroPost.title}
-            slug={heroPost.slug}
-            coverImage={heroPost.coverImage}
-            excerpt={heroPost.excerpt}
-            date={heroPost.date}
-            authors={heroPost.authors ?? []}
-            categories={heroPost.categories ?? []}
-           />
-        ) : (
-          <Onboarding />
-        )}
+      <div className="container mx-auto px-5 mt-10 md:mt-14">
+        {!heroPost && <Onboarding />}
         {heroPost?._id && (
           <aside>
             <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">

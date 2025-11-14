@@ -49,19 +49,18 @@ export default function Hero() {
   };
 
   return (
-    <div className="bg-background text-foreground">
-      
-
-      <main role="main" className="p-8">
+      <main role="main" className=" container mx-auto px-5 ">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="md:col-span-2">
             {/* Título visible solo en móviles, ubicado arriba del contenedor del video */}
             <div className="md:hidden mb-4">
-              <h2 className="text-4xl font-medium uppercase tracking-widest">
-                {heroPost?.title ?? ""}
-              </h2>
+              <Link href={`/posts/${heroPost?.slug}`}>
+                <h2 className="text-4xl font-medium uppercase tracking-widest">
+                  {heroPost?.title ?? ""}
+                </h2>
+              </Link>
             </div>
-            <div className="relative aspect-video overflow-hidden rounded-lg">
+            <div className="relative group aspect-video overflow-hidden rounded-lg">
             <video
               autoPlay
               muted
@@ -74,8 +73,14 @@ export default function Hero() {
               <source src="/video/meteor_shower_2_.webm" type="video/webm" />
               Your browser does not support the video tag.
             </video>
+            <Link
+              href={`/posts/${heroPost?.slug}`}
+              className="absolute inset-0 z-20"
+            >
+              <span className="sr-only">{heroPost?.title ?? ""}</span>
+            </Link>
             <div className="absolute bottom-4 left-4 text-white z-10">
-              <h2 className="hidden md:block text-4xl font-medium uppercase tracking-widest">
+              <h2 className="hidden md:block text-4xl font-medium uppercase tracking-widest group-hover:underline">
                 {heroPost?.title ?? ""}
               </h2>
               <p className="text-lg">
@@ -90,10 +95,10 @@ export default function Hero() {
             </div>
           </div>
 
-          <aside className="hover:underline" aria-labelledby="featured-press-releases">
+          <aside aria-labelledby="featured-press-releases">
             <h2
               id="featured-press-releases"
-              className="text-2xl font-medium mb-4"
+              className="text-2xl font-medium mb-4 hover:underline"
             >
               {heroPost?.subtitle ?? ""}
             </h2>
@@ -109,16 +114,9 @@ export default function Hero() {
           </aside>
         </div>
 
-        <div className="mt-8">
-          <h1 className="text-4xl md:text-5xl font-medium uppercase tracking-widest">
-            {title}
-          </h1>
-          <div className="mt-4 font-light">
-            <PortableText className="prose-lg" value={description} />
-          </div>
-        </div>
+        
+        
       </main>
-    </div>
   );
 }
   // Divide una descripción en múltiples párrafos sin modificar el contenido original.

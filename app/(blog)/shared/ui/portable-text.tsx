@@ -50,7 +50,7 @@ export default function CustomPortableText({
 }) {
   const components: PortableTextComponents = {
     block: {
-      normal: ({ children }) => <p>{children}</p>,
+      normal: ({ children }) => <p className="whitespace-pre-line">{children}</p>,
       h1: ({ children }) => (
         <h1 className="mt-8 mb-4 text-4xl font-bold leading-tight">{children}</h1>
       ),
