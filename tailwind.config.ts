@@ -6,9 +6,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-mono)"],
-        serif: ["var(--font-geist-mono)"],
-        mono: ["var(--font-geist-mono)"],
+        sans: ["OCR A Extended", "monospace"],
+        serif: ["OCR A Extended", "monospace"],
+        mono: ["OCR A Extended", "monospace"],
+        ocra: ["OCR A Extended", "monospace"],
       },
     },
   },

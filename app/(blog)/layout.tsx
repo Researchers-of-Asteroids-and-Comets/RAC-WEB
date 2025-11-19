@@ -3,11 +3,8 @@ import "../globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
-import {
-  toPlainText,
-  type PortableTextBlock,
-} from "next-sanity";
-import { GeistMono } from "geist/font/mono";
+import { toPlainText, type PortableTextBlock } from "next-sanity";
+// Removed GeistMono; using OCR A Extended globally
 import { draftMode } from "next/headers";
 
 import AlertBanner from "./shared/ui/alert-banner";
@@ -59,7 +56,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // GeistMono is already configured with the variable --font-geist-mono
 
-
 export default async function RootLayout({
   children,
 }: {
@@ -70,8 +66,16 @@ export default async function RootLayout({
   const { isEnabled: isDraftMode } = await draftMode();
 
   return (
-    <html lang="en" className={`${GeistMono.variable} bg-background text-foreground`}>
-      <body>
+    <html lang="en" className={`bg-background text-foreground`}>
+      <head>
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+        <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+        <link
+          href="https://fonts.cdnfonts.com/css/ocr-a-extended"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="font-ocra">
         <MenuProvider>
           <section className="min-h-screen">
             {isDraftMode && <AlertBanner />}
@@ -97,7 +101,7 @@ export default async function RootLayout({
                       >
                         About Us
                       </Link>
-                       <CategoryLink />
+                      <CategoryLink />
                       {/*
                       <a
                         href="https://github.com/rac"

@@ -14,7 +14,7 @@ export const description = [
         _key: "span-research",
         _type: "span",
         marks: [],
-        text: "Research on Asteroids and Comets\nAdvancing our understanding of asteroids and comets,\nusing the Secular Light Curves (SLC) Methodology,\n and the Evolutinary Diagram",
+        text: "Research on Asteroids and Comets\nAdvancing our understanding of minor bodies of the solar system\nusing the Secular Light Curves (SLC) Methodology,\n and the Evolutionary Diagram",
       },
     ],
     style: "normal",

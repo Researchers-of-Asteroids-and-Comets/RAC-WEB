@@ -50,9 +50,9 @@
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: #333333;
   --sidebar-ring: #a4a4a4;
-  --font-sans: Geist, sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: Geist Mono, monospace;
+  --font-sans: 'OCR A Extended', monospace;
+  --font-serif: 'OCR A Extended', monospace;
+  --font-mono: 'OCR A Extended', monospace;
   --radius: 0rem;
   --shadow-x: 0px;
   --shadow-y: 1px;
