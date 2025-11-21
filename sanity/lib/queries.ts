@@ -122,3 +122,13 @@ export const allPostsQuery = defineQuery(`
     ${postFields}
   }
 `);
+
+export const galleryImagesQuery = defineQuery(`
+  *[_type == "galleryImage"] | order(_updatedAt desc) {
+    _id,
+    image,
+    "alt": coalesce(image.alt, image.asset->originalFilename),
+    href,
+    "dimensions": image.asset->metadata.dimensions
+  }
+`);

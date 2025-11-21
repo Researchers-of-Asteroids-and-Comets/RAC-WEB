@@ -13,6 +13,44 @@
  */
 
 // Source: schema.json
+export type GalleryImage = {
+  _id: string;
+  _type: "galleryImage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  href?: string;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
 export type Role = {
   _id: string;
   _type: "role";
@@ -82,22 +120,6 @@ export type Page = {
     _type: "imageGallery";
     _key: string;
   }>;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
 };
 
 export type Slug = {
@@ -531,7 +553,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = Role | Page | SanityImageCrop | SanityImageHotspot | Slug | Author | Post | Category | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = GalleryImage | SanityImageCrop | SanityImageHotspot | Role | Page | Slug | Author | Post | Category | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./app/(blog)/categories/[slug]/page.tsx
 // Variable: categorySlugs
@@ -1223,6 +1245,27 @@ export type AllPostsQueryResult = Array<{
     slug: string | null;
   }> | null;
 }>;
+// Variable: galleryImagesQuery
+// Query: *[_type == "galleryImage"] | order(_updatedAt desc) {    _id,    image,    "alt": coalesce(image.alt, image.asset->originalFilename),    href,    "dimensions": image.asset->metadata.dimensions  }
+export type GalleryImagesQueryResult = Array<{
+  _id: string;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  alt: string | null;
+  href: string | null;
+  dimensions: SanityImageDimensions | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1245,5 +1288,6 @@ declare module "@sanity/client" {
     "\n  *[_type == \"category\" && slug.current == $slug][0] {\n    name,\n    \"slug\": slug.current,\n    description\n  }\n": CategoryBySlugQueryResult;
     "\n  *[_type == \"post\" && defined(slug.current) && \n    ($searchTerm == \"\" || title match $searchTerm + \"*\" || excerpt match $searchTerm + \"*\") &&\n    ($categorySlug == \"\" || $categorySlug in categories[]->slug.current)\n  ] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": SearchPostsQueryResult;
     "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": AllPostsQueryResult;
+    "\n  *[_type == \"galleryImage\"] | order(_updatedAt desc) {\n    _id,\n    image,\n    \"alt\": coalesce(image.alt, image.asset->originalFilename),\n    href,\n    \"dimensions\": image.asset->metadata.dimensions\n  }\n": GalleryImagesQueryResult;
   }
 }

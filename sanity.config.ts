@@ -21,6 +21,7 @@ import category from "@/sanity/schemas/documents/category";
 import post from "@/sanity/schemas/documents/post";
 import page from "@/sanity/schemas/documents/page";
 import role from "@/sanity/schemas/documents/role";
+import galleryImage from "@/sanity/schemas/documents/galleryImage";
 import settings from "@/sanity/schemas/singletons/settings";
 import { resolveHref } from "@/sanity/lib/utils";
 
@@ -43,6 +44,7 @@ export default defineConfig({
       author,
       page,
       role,
+      galleryImage,
     ],
   },
   plugins: [
