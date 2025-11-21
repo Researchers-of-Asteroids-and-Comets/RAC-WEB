@@ -3,9 +3,9 @@
   "type": "module",
   "scripts": {
     "predev": "npm run typegen",
-    "dev": "next --turbo",
+    "dev": "next dev",
     "prebuild": "npm run typegen",
-    "build": "next build --webpack",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "presetup": "echo 'about to setup env variables, follow the guide here: https://github.com/vercel/next.js/tree/canary/examples/cms-sanity#using-the-sanity-cli'",
