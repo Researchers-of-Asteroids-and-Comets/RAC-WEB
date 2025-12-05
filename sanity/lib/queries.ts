@@ -123,6 +123,7 @@ export const allPostsQuery = defineQuery(`
   }
 `);
 
+
 export const galleryImagesQuery = defineQuery(`
   *[_type == "galleryImage"] | order(_updatedAt desc) {
     _id,
@@ -130,5 +131,19 @@ export const galleryImagesQuery = defineQuery(`
     "alt": coalesce(image.alt, image.asset->originalFilename),
     href,
     "dimensions": image.asset->metadata.dimensions
+  }
+`);
+
+export const papersQuery = defineQuery(`
+  *[_type == "paper"] | order(publicationDate desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    authors,
+    publicationDate,
+    journal,
+    abstract,
+    paperUrl,
+    "fileUrl": file.asset->url
   }
 `);

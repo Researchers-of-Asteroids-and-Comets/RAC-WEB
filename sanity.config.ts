@@ -22,6 +22,7 @@ import post from "@/sanity/schemas/documents/post";
 import page from "@/sanity/schemas/documents/page";
 import role from "@/sanity/schemas/documents/role";
 import galleryImage from "@/sanity/schemas/documents/galleryImage";
+import paper from "@/sanity/schemas/documents/paper";
 import settings from "@/sanity/schemas/singletons/settings";
 import { resolveHref } from "@/sanity/lib/utils";
 
@@ -45,6 +46,7 @@ export default defineConfig({
       page,
       role,
       galleryImage,
+      paper,
     ],
   },
   plugins: [
@@ -94,8 +96,8 @@ export default defineConfig({
     assistWithPresets(),
     // Vision lets you query your content with GROQ in the studio
     // https://www.sanity.io/docs/the-vision-plugin
-    ...(process.env.NODE_ENV === "development" 
-      ? [visionTool({ defaultApiVersion: apiVersion })] 
+    ...(process.env.NODE_ENV === "development"
+      ? [visionTool({ defaultApiVersion: apiVersion })]
       : []),
   ],
 });
