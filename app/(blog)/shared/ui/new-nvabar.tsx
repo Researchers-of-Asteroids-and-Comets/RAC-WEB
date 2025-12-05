@@ -22,7 +22,7 @@ export default function NewNvabar() {
   ];
 
   return (
-    <div className="w-full px-5 flex flex-col gap-6">
+    <div className="w-full p-5 flex flex-col gap-6">
       {/* Encabezado con fondo usando next/image */}
       <div className="relative w-full overflow-hidden rounded-md h-28 md:h-36 lg:h-44 xl:h-52 shrink-0">
         <Image
@@ -41,7 +41,7 @@ export default function NewNvabar() {
         <div className="flex items-center gap-5 shrink-0">
           <RACIcon size={84} className="rounded-full shadow-xl shrink-0" />
 
-          <div className="text-7xl md:text-8xl font-bold leading-none tracking-tighter select-none">
+          <div className="text-7xl md:text-8xl font-bold leading-none tracking-normal select-none">
             {Array.from(abbreviation).map((ch, i) => (
               <span
                 key={i}
@@ -106,8 +106,8 @@ const splitDescriptionIntoParagraphs = (
         .map((b) =>
           Array.isArray(b?.children)
             ? b.children
-                .map((c) => (typeof c?.text === "string" ? c.text : ""))
-                .join("")
+              .map((c) => (typeof c?.text === "string" ? c.text : ""))
+              .join("")
             : "",
         )
         .join(" ");

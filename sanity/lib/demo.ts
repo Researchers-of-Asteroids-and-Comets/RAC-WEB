@@ -21,4 +21,4 @@ export const description = [
   },
 ];
 
-export const ogImageTitle = "Research on Asteroids and Comets - University of Antioquia";
+export const ogImageTitle = "Research on Asteroids and Comets";
