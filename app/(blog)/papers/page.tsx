@@ -26,11 +26,11 @@ export default async function PapersPage() {
 
     return (
         <div className="container mx-auto px-5 mt-10 mb-20">
-            <div className="mb-12 text-center md:text-left">
-                <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight md:pr-8 mb-4">
+            <div className="mb-12 text-center">
+                <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight mb-4">
                     Research Papers
                 </h1>
-                <p className="text-lg text-gray-500 max-w-2xl">
+                <p className="text-lg text-gray-500 max-w-2xl mx-auto">
                     Explore our latest publications and contributions to the field of cometary and asteroid research.
                 </p>
             </div>

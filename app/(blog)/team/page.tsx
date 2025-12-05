@@ -13,12 +13,11 @@ export default async function TeamPage() {
         </h1>
         <div className="col-span-12 md:col-span-6 md:col-start-7 text-start font-light">
           <p className="text-base text-white leading-relaxed">
-            Meet our distinguished researchers and academics who drive groundbreaking discoveries 
-            across multiple disciplines. Explore their expertise and contributions to the scientific community.
+            Get to know the diverse group of minds behind our research. From junior students to experienced principal investigators, our team is united by a passion for discovery and contribution to science.
           </p>
         </div>
       </div>
-      
+
       <TeamGrid authors={authors} />
     </section>
   );
