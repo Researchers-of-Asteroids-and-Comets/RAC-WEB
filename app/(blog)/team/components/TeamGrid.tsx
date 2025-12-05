@@ -17,25 +17,25 @@ export default function TeamGrid({ authors }: TeamGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-px bg-neutral-800 border border-neutral-800">
       {authors.map((author) => {
         if (!author.name || !author.slug) return null;
 
         return (
           <article
             key={author.slug}
-            className="group transition-all duration-200"
+            className="group flex flex-col bg-black hover:bg-neutral-900 transition-colors duration-200 p-4"
           >
-            <Link href={`/authors/${author.slug}`} className="block">
-              <div className="flex flex-col gap-2">
+            <Link href={`/authors/${author.slug}`} className="block h-full">
+              <div className="flex flex-col h-full gap-4">
                 {/* Square Author Photo */}
-                <div className="aspect-square w-full overflow-hidden bg-neutral-100">
+                <div className="aspect-square w-full overflow-hidden bg-neutral-100 transition-all duration-300">
                   {author.picture?.asset ? (
                     <Image
-                      src={urlForImage(author.picture)?.width(192).height(192).fit('crop').url() || ''}
+                      src={urlForImage(author.picture)?.width(400).height(400).fit('crop').url() || ''}
                       alt={author.picture?.alt || author.name}
-                      width={192}
-                      height={192}
+                      width={400}
+                      height={400}
                       className="w-full h-full object-cover"
                     />
                   ) : (
@@ -47,19 +47,19 @@ export default function TeamGrid({ authors }: TeamGridProps) {
                   )}
                 </div>
 
-                {/* Author Name */}
-                <h3 className="text-sm font-medium group-hover:underline transition-all">
-                  {author.name}
-                </h3>
+                <div className="flex flex-col justify-between flex-grow gap-1">
+                  {/* Author Name */}
+                  <h3 className="text-sm font-medium text-white uppercase tracking-wider">
+                    {author.name}
+                  </h3>
 
-                {/* Role in Organization */}
-                {author.roles?.length ? (
-                  <div className="w-full">
-                    <p className="text-sm text-muted-foreground font-light">
+                  {/* Role in Organization */}
+                  {author.roles?.length ? (
+                    <p className="text-xs text-neutral-500 font-mono uppercase">
                       {author.roles.slice(0, 2).map(role => role.title).join(" • ")}
                     </p>
-                  </div>
-                ) : null}
+                  ) : null}
+                </div>
               </div>
             </Link>
           </article>
