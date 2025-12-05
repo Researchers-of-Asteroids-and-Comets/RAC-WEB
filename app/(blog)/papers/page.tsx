@@ -11,63 +11,61 @@ export const metadata = {
 
 interface Paper {
     _id: string;
-    title: string;
-    slug: string;
-    authors?: string[];
-    publicationDate?: string;
-    journal?: string;
-    abstract?: string;
-    paperUrl?: string;
-    fileUrl?: string;
+    title: string | null;
+    slug: string | null;
+    authors: string[] | null;
+    publicationDate: string | null;
+    journal: string | null;
+    abstract: string | null;
+    paperUrl: string | null;
+    fileUrl: string | null;
 }
 
 export default async function PapersPage() {
     const papers = await sanityFetch({ query: papersQuery });
 
     return (
-        <div className="container mx-auto px-5 mt-10 mb-20">
-            <div className="mb-12 text-center">
-                <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight mb-4">
-                    Research Papers
+        <div className="container mx-auto px-5 mt-10 mb-20 font-mono">
+            <div className="mb-12 border-b border-neutral-800 pb-8">
+                <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight mb-4 uppercase">
+                    / RESEARCH_PAPERS
                 </h1>
-                <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-                    Explore our latest publications and contributions to the field of cometary and asteroid research.
+                <p className="text-lg text-neutral-400 max-w-2xl">
+                    &gt; COLLECTION_OF_PUBLICATIONS_AND_CONTRIBUTIONS
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-px bg-neutral-800 border border-neutral-800">
                 {papers.length > 0 ? (
                     papers.map((paper: Paper) => (
                         <article
                             key={paper._id}
-                            className="group flex flex-col p-6 border border-gray-100 dark:border-gray-800 rounded-2xl hover:shadow-xl transition-all duration-300 bg-white dark:bg-gray-900/50 hover:-translate-y-1"
+                            className="group flex flex-col p-6 bg-black hover:bg-neutral-900 transition-colors duration-200"
                         >
                             <div className="flex-1 space-y-4">
-                                <div className="flex justify-between items-start gap-4">
-                                    <div className="flex flex-wrap gap-2 items-center text-xs font-semibold uppercase tracking-wider text-gray-400">
+                                <div className="flex justify-between items-start gap-4 text-xs font-mono text-neutral-500 uppercase tracking-widest">
+                                    <div className="flex flex-wrap gap-2 items-center">
                                         {paper.publicationDate && (
                                             <time dateTime={paper.publicationDate}>
-                                                {new Date(paper.publicationDate).toLocaleDateString("en-US", {
-                                                    year: "numeric",
-                                                    month: "short",
-                                                })}
+                                                {(() => {
+                                                    const date = new Date(paper.publicationDate);
+                                                    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                                    return `${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+                                                })()}
                                             </time>
                                         )}
                                         {paper.journal && (
                                             <>
-                                                <span>•</span>
-                                                <span className="text-blue-600 dark:text-blue-400">
+                                                <span>//</span>
+                                                <span className="text-neutral-400">
                                                     {paper.journal}
                                                 </span>
                                             </>
                                         )}
                                     </div>
-                                    <div className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <ArrowTopRightIcon className="w-5 h-5 text-gray-400" />
-                                    </div>
                                 </div>
 
-                                <h2 className="text-xl md:text-2xl font-bold leading-tight group-hover:text-blue-600 transition-colors">
+                                <h2 className="text-xl md:text-2xl font-bold leading-tight group-hover:text-blue-500 transition-colors uppercase">
                                     {paper.paperUrl ? (
                                         <a
                                             href={paper.paperUrl}
@@ -81,38 +79,31 @@ export default async function PapersPage() {
                                     )}
                                 </h2>
 
-                                <div className="flex flex-wrap gap-1 text-xs">
-                                    {paper.authors?.slice(0, 3).map((author: string, index: number) => (
-                                        <span
-                                            key={index}
-                                            className="bg-gray-50 dark:bg-white/5 px-2 py-1 rounded-md text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-white/10"
-                                        >
+                                <div className="flex flex-wrap gap-2 text-xs font-mono text-neutral-400">
+                                    <span>[AUTHORS]:</span>
+                                    {paper.authors?.map((author: string, index: number) => (
+                                        <span key={index} className="text-white bg-neutral-900 px-1">
                                             {author}
                                         </span>
                                     ))}
-                                    {paper.authors && paper.authors.length > 3 && (
-                                        <span className="bg-gray-50 dark:bg-white/5 px-2 py-1 rounded-md text-gray-500 border border-gray-100 dark:border-white/10">
-                                            +{paper.authors.length - 3} more
-                                        </span>
-                                    )}
                                 </div>
 
                                 {paper.abstract && (
-                                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm line-clamp-4">
+                                    <p className="text-neutral-400 leading-relaxed text-sm line-clamp-4 font-mono border-l-2 border-neutral-800 pl-4">
                                         {paper.abstract}
                                     </p>
                                 )}
                             </div>
 
-                            <div className="pt-6 mt-4 border-t border-gray-100 dark:border-gray-800 flex flex-wrap gap-3">
+                            <div className="pt-6 mt-6 border-t border-neutral-900 flex flex-wrap gap-4 text-xs font-mono uppercase">
                                 {paper.paperUrl && (
                                     <a
                                         href={paper.paperUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex-1 inline-flex justify-center items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/50 transition-colors text-sm font-medium"
+                                        className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-400 hover:underline decoration-1 underline-offset-4"
                                     >
-                                        View Source
+                                        [ VIEW_SOURCE ]
                                     </a>
                                 )}
                                 {paper.fileUrl && (
@@ -120,17 +111,17 @@ export default async function PapersPage() {
                                         href={paper.fileUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex-1 inline-flex justify-center items-center gap-2 px-4 py-2 rounded-lg bg-green-50 text-green-700 hover:bg-green-100 dark:bg-green-900/30 dark:text-green-300 dark:hover:bg-green-900/50 transition-colors text-sm font-medium"
+                                        className="inline-flex items-center gap-2 text-green-500 hover:text-green-400 hover:underline decoration-1 underline-offset-4"
                                     >
-                                        Download PDF <DocumentTextIcon className="w-4 h-4" />
+                                        [ DOWNLOAD_PDF ]
                                     </a>
                                 )}
                             </div>
                         </article>
                     ))
                 ) : (
-                    <div className="col-span-full text-center py-20 text-gray-500">
-                        <p className="text-xl">No papers found yet.</p>
+                    <div className="col-span-full text-center py-20 text-neutral-500 font-mono bg-black">
+                        <p className="">[ SYSTEM: NO_PAPERS_FOUND ]</p>
                     </div>
                 )}
             </div>

@@ -1291,6 +1291,19 @@ export type GalleryImagesQueryResult = Array<{
   href: string | null;
   dimensions: SanityImageDimensions | null;
 }>;
+// Variable: papersQuery
+// Query: *[_type == "paper"] | order(publicationDate desc) {    _id,    title,    "slug": slug.current,    authors,    publicationDate,    journal,    abstract,    paperUrl,    "fileUrl": file.asset->url  }
+export type PapersQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  authors: Array<string> | null;
+  publicationDate: string | null;
+  journal: string | null;
+  abstract: string | null;
+  paperUrl: string | null;
+  fileUrl: string | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1314,5 +1327,6 @@ declare module "@sanity/client" {
     "\n  *[_type == \"post\" && defined(slug.current) && \n    ($searchTerm == \"\" || title match $searchTerm + \"*\" || excerpt match $searchTerm + \"*\") &&\n    ($categorySlug == \"\" || $categorySlug in categories[]->slug.current)\n  ] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": SearchPostsQueryResult;
     "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": AllPostsQueryResult;
     "\n  *[_type == \"galleryImage\"] | order(_updatedAt desc) {\n    _id,\n    image,\n    \"alt\": coalesce(image.alt, image.asset->originalFilename),\n    href,\n    \"dimensions\": image.asset->metadata.dimensions\n  }\n": GalleryImagesQueryResult;
+    "\n  *[_type == \"paper\"] | order(publicationDate desc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    authors,\n    publicationDate,\n    journal,\n    abstract,\n    paperUrl,\n    \"fileUrl\": file.asset->url\n  }\n": PapersQueryResult;
   }
 }
