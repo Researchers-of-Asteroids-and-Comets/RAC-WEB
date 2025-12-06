@@ -8,15 +8,17 @@ export default async function ImagesPage() {
   const images = (await sanityFetch({ query: galleryImagesQuery })) as GalleryImagesQueryResult;
 
   return (
-    <section className="min-h-[40vh] p-6">
-      <div className="grid grid-cols-12 gap-y-4 gap-x-4 mb-8">
-        <h1 className="col-span-12 md:col-span-8 text-start text-4xl md:text-5xl font-medium uppercase tracking-widest">Images</h1>
-        <div className="col-span-12 md:col-span-6 md:col-start-7 text-start font-light">
-          <p className="text-base text-white leading-relaxed">Our own galley</p>
-        </div>
+    <section className="container mx-auto p-5">
+      <div className="mb-12 border-b border-neutral-800 pb-8">
+        <h1 className="text-4xl md:text-6xl font-medium tracking-tighter leading-tight mb-4 uppercase">
+          IMAGES
+        </h1>
+        <p className="text-lg text-neutral-400 max-w-2xl">
+          OUR OWN GALLEY
+        </p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px bg-neutral-800 border border-neutral-800">
         {(images || []).map((doc) => {
           const ar = doc.dimensions?.aspectRatio || 1;
           const originalWidth = doc.dimensions?.width || 800;
@@ -38,7 +40,7 @@ export default async function ImagesPage() {
           );
 
           return (
-            <figure key={doc._id} className="group relative overflow-hidden rounded-lg bg-black/20">
+            <figure key={doc._id} className="group relative overflow-hidden bg-black transition-colors duration-200">
               {doc.href ? (
                 <a href={doc.href} target="_blank" rel="noopener noreferrer">
                   {content}
