@@ -13,6 +13,16 @@
  */
 
 // Source: schema.json
+export type Video = {
+  _id: string;
+  _type: "video";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  youtubeUrl?: string;
+};
+
 export type Paper = {
   _id: string;
   _type: "paper";
@@ -63,7 +73,6 @@ export type GalleryImage = {
     alt?: string;
     _type: "image";
   };
-  href?: string;
 };
 
 export type SanityImageCrop = {
@@ -578,7 +587,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = Paper | Slug | GalleryImage | SanityImageCrop | SanityImageHotspot | Role | Page | Author | Post | Category | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = Video | Paper | Slug | GalleryImage | SanityImageCrop | SanityImageHotspot | Role | Page | Author | Post | Category | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./app/(blog)/categories/[slug]/page.tsx
 // Variable: categorySlugs
@@ -1271,7 +1280,7 @@ export type AllPostsQueryResult = Array<{
   }> | null;
 }>;
 // Variable: galleryImagesQuery
-// Query: *[_type == "galleryImage"] | order(_updatedAt desc) {    _id,    image,    "alt": coalesce(image.alt, image.asset->originalFilename),    href,    "dimensions": image.asset->metadata.dimensions  }
+// Query: *[_type == "galleryImage"] | order(_updatedAt desc) {    _id,    image,    "alt": coalesce(image.alt, image.asset->originalFilename),    "dimensions": image.asset->metadata.dimensions  }
 export type GalleryImagesQueryResult = Array<{
   _id: string;
   image: {
@@ -1288,7 +1297,6 @@ export type GalleryImagesQueryResult = Array<{
     _type: "image";
   } | null;
   alt: string | null;
-  href: string | null;
   dimensions: SanityImageDimensions | null;
 }>;
 // Variable: papersQuery
@@ -1303,6 +1311,13 @@ export type PapersQueryResult = Array<{
   abstract: string | null;
   paperUrl: string | null;
   fileUrl: string | null;
+}>;
+// Variable: videosQuery
+// Query: *[_type == "video"] | order(_updatedAt desc) {    _id,    title,    youtubeUrl  }
+export type VideosQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  youtubeUrl: string | null;
 }>;
 
 // Query TypeMap
@@ -1326,7 +1341,8 @@ declare module "@sanity/client" {
     "\n  *[_type == \"category\" && slug.current == $slug][0] {\n    name,\n    \"slug\": slug.current,\n    description\n  }\n": CategoryBySlugQueryResult;
     "\n  *[_type == \"post\" && defined(slug.current) && \n    ($searchTerm == \"\" || title match $searchTerm + \"*\" || excerpt match $searchTerm + \"*\") &&\n    ($categorySlug == \"\" || $categorySlug in categories[]->slug.current)\n  ] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": SearchPostsQueryResult;
     "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"authors\": select(\n    count(authors) > 0 => authors[]->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current},\n    defined(author) => [author->{\"name\": coalesce(name, \"Anonymous\"), picture, \"slug\": slug.current}],\n    []\n  ),\n  \"categories\": categories[]->{name, \"slug\": slug.current},\n\n  }\n": AllPostsQueryResult;
-    "\n  *[_type == \"galleryImage\"] | order(_updatedAt desc) {\n    _id,\n    image,\n    \"alt\": coalesce(image.alt, image.asset->originalFilename),\n    href,\n    \"dimensions\": image.asset->metadata.dimensions\n  }\n": GalleryImagesQueryResult;
+    "\n  *[_type == \"galleryImage\"] | order(_updatedAt desc) {\n    _id,\n    image,\n    \"alt\": coalesce(image.alt, image.asset->originalFilename),\n\n    \"dimensions\": image.asset->metadata.dimensions\n  }\n": GalleryImagesQueryResult;
     "\n  *[_type == \"paper\"] | order(publicationDate desc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    authors,\n    publicationDate,\n    journal,\n    abstract,\n    paperUrl,\n    \"fileUrl\": file.asset->url\n  }\n": PapersQueryResult;
+    "\n  *[_type == \"video\"] | order(_updatedAt desc) {\n    _id,\n    title,\n    youtubeUrl\n  }\n": VideosQueryResult;
   }
 }

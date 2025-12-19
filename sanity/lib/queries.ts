@@ -129,7 +129,7 @@ export const galleryImagesQuery = defineQuery(`
     _id,
     image,
     "alt": coalesce(image.alt, image.asset->originalFilename),
-    href,
+
     "dimensions": image.asset->metadata.dimensions
   }
 `);
@@ -147,3 +147,12 @@ export const papersQuery = defineQuery(`
     "fileUrl": file.asset->url
   }
 `);
+
+export const videosQuery = defineQuery(`
+  *[_type == "video"] | order(_updatedAt desc) {
+    _id,
+    title,
+    youtubeUrl
+  }
+`);
+

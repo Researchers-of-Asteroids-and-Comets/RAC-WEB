@@ -23,12 +23,7 @@ export default defineType({
       ],
       validation: (rule) => rule.required(),
     }),
-    defineField({
-      name: "href",
-      title: "Link",
-      type: "url",
-      validation: (rule) => rule.uri({ scheme: ["http", "https"] }),
-    }),
+
   ],
   preview: {
     select: { title: "image.alt", media: "image" },

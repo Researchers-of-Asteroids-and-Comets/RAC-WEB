@@ -23,6 +23,7 @@ import page from "@/sanity/schemas/documents/page";
 import role from "@/sanity/schemas/documents/role";
 import galleryImage from "@/sanity/schemas/documents/galleryImage";
 import paper from "@/sanity/schemas/documents/paper";
+import video from "@/sanity/schemas/documents/video";
 import settings from "@/sanity/schemas/singletons/settings";
 import { resolveHref } from "@/sanity/lib/utils";
 
@@ -47,6 +48,7 @@ export default defineConfig({
       role,
       galleryImage,
       paper,
+      video,
     ],
   },
   plugins: [
