@@ -5,6 +5,35 @@ import { RACIcon } from "./icons/rac-icon";
 import * as demo from "@/sanity/lib/demo";
 import type { PortableTextBlock } from "next-sanity";
 
+// RAC brand colors used throughout the site
+const RAC_COLORS = {
+  red: "#CE1126",
+  yellow: "#FCD116",
+  blue: "#3B82F6",
+} as const;
+
+type TitleSegment = { text: string; color?: string };
+
+// Styled title configuration - easy to modify
+const TITLE_SEGMENTS: TitleSegment[] = [
+  { text: "Research", color: RAC_COLORS.red },
+  { text: " on " },
+  { text: "Asteroids", color: RAC_COLORS.yellow },
+  { text: " and " },
+  { text: "Comets", color: RAC_COLORS.blue },
+];
+
+// Componente para el título estilizado con colores RAC
+const StyledTitle = () => (
+  <span className="font-bold">
+    {TITLE_SEGMENTS.map((segment, i) => (
+      <span key={i} style={segment.color ? { color: segment.color } : undefined}>
+        {segment.text}
+      </span>
+    ))}
+  </span>
+);
+
 // Componente global: new-nvabar
 export default function NewNvabar() {
   const abbreviation = demo.abbreviation;
@@ -54,11 +83,14 @@ export default function NewNvabar() {
         </div>
 
         {/* Descripción que fluye naturalmente */}
-        <div className="text-md md:text-base max-w-3xl text-pretty pt-2">
-          <PortableText
-            className="prose-sm prose-invert leading-relaxed"
-            value={splitDescriptionIntoParagraphs(description)}
-          />
+        <div className="text-md md:text-base max-w-3xl text-pretty pt-2 leading-relaxed">
+          <StyledTitle />
+          <br />
+          Advancing our understanding of minor bodies of the solar system
+          <br />
+          using the Secular Light Curves (SLC) Methodology,
+          <br />
+          and the Evolutionary Diagram
         </div>
       </div>
 
