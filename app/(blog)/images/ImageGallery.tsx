@@ -24,7 +24,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
 
     return (
         <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px bg-neutral-800 border border-neutral-800">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-px bg-neutral-800 border border-neutral-800">
                 {images.length > 0 ? (
                     images.map((img) => (
                         <figure
@@ -37,9 +37,25 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
                                 alt={img.alt || ""}
                                 width={img.dimensions?.width || 800}
                                 height={Math.round((img.dimensions?.width || 800) / (img.dimensions?.aspectRatio || 1))}
-                                className="h-auto w-full object-contain"
-                                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                                className="h-auto w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                                sizes="(max-width: 768px) 100vw, 50vw"
                             />
+                            {/* Hover overlay */}
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <svg
+                                    className="w-12 h-12 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={1.5}
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                                    />
+                                </svg>
+                            </div>
                         </figure>
                     ))
                 ) : (
