@@ -70,7 +70,7 @@ export default async function PostPage({ params }: Props) {
   return (
     <div className="container mx-auto px-5">
       <article>
-        <h1 className="text-balance mb-12 text-6xl leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
+        <h1 className="text-balance mb-12 text-4xl leading-tight tracking-tighter md:text-5xl md:leading-none lg:text-6xl">
           {post.title}
         </h1>
         <div className="hidden md:mb-12 md:block">

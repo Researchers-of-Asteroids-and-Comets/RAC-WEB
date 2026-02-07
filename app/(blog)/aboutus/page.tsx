@@ -12,7 +12,7 @@ export default async function AboutUsPage() {
   return (
     <div className="relative min-h-screen">
       <div className="relative container mx-auto px-5 z-10 flex flex-col min-h-screen text-dark">
-        <h1 className="text-balance mb-12 text-6xl font-sans leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
+        <h1 className="text-balance mb-12 text-4xl font-sans leading-tight tracking-tighter md:text-5xl md:leading-none lg:text-6xl">
           {about?.title || "About Us"}
         </h1>
         {about?.content?.length ? (

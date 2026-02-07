@@ -32,55 +32,58 @@ export default function Hero({ heroPost }: HeroProps) {
 
   return (
     <main role="main" className="px-5">
-      <div className="grid grid-cols-1 gap-8">
-        <div>
-          <div className="relative group aspect-video overflow-hidden rounded-lg bg-neutral-900">
-            {postImageUrl ? (
-              <Image
-                src={postImageUrl}
-                alt={heroPost.title || "Hero Image"}
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 100vw"
-                className="absolute inset-0 w-full h-full object-cover z-0"
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center bg-neutral-950">
-                <RACIcon size={120} className="opacity-20 grayscale" />
-              </div>
-            )}
-            <Link
-              href={`/posts/${heroPost.slug}`}
-              className="absolute inset-0 z-20"
-            >
-              <span className="sr-only">{heroPost.title ?? ""}</span>
-            </Link>
-            <div className="absolute bottom-4 left-4 text-white z-10">
-              <p className="text-lg">
-                {[heroPost.categories?.[0]?.name, formatDate(heroPost.date)]
-                  .filter(Boolean)
-                  .join(" • ")}
-              </p>
+      <article className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        {/* 
+          Image container - Fixed dimensions for consistency
+          Recommended cover image size: 600x400px (3:2 aspect ratio)
+        */}
+        <div className="relative group overflow-hidden rounded-lg bg-neutral-900 w-full h-[300px] md:h-[350px] lg:h-[400px]">
+          {postImageUrl ? (
+            <Image
+              src={postImageUrl}
+              alt={heroPost.title || "Hero Image"}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 600px"
+              className="object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-neutral-950">
+              <RACIcon size={80} className="opacity-20 grayscale" />
             </div>
-          </div>
+          )}
+          <Link
+            href={`/posts/${heroPost.slug}`}
+            className="absolute inset-0 z-20"
+          >
+            <span className="sr-only">{heroPost.title ?? ""}</span>
+          </Link>
         </div>
 
-        <aside aria-labelledby="featured-press-releases">
-          <h2
-            id="featured-press-releases"
-            className="text-2xl font-medium mb-4 hover:underline"
-          >
-            <Link href={`/posts/${heroPost.slug}`}>{heroPost.title ?? ""}</Link>
+        {/* Content - with limited height to match image */}
+        <div className="flex flex-col justify-start py-2 lg:max-h-[400px] overflow-hidden">
+          <p className="text-sm text-neutral-400 uppercase tracking-wider mb-3">
+            {[heroPost.categories?.[0]?.name, formatDate(heroPost.date)]
+              .filter(Boolean)
+              .join(" • ")}
+          </p>
+          <h2 className="text-2xl md:text-3xl font-medium mb-4 leading-tight">
+            <Link
+              href={`/posts/${heroPost.slug}`}
+              className="hover:underline"
+            >
+              {heroPost.title ?? ""}
+            </Link>
           </h2>
-          <ul className="space-y-4">
-            {heroPost.excerpt ? (
-              <li>
-                <Link href={`/posts/${heroPost.slug}`}>{heroPost.excerpt}</Link>
-              </li>
-            ) : null}
-          </ul>
-        </aside>
-      </div>
+          {heroPost.excerpt && (
+            <p className="text-neutral-400 leading-relaxed line-clamp-8">
+              <Link href={`/posts/${heroPost.slug}`}>
+                {heroPost.excerpt}
+              </Link>
+            </p>
+          )}
+        </div>
+      </article>
     </main>
   );
 }
